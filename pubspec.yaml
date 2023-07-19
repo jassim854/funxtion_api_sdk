@@ -1,7 +1,7 @@
 name: funxtion
 description: Funxtion SDK for member app
 version: 0.0.1
-homepage:
+homepage: https://github.com/Evolverstech/funxtion-sdk.git
 
 environment:
   sdk: '>=2.19.0 <3.0.0'
