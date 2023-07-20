@@ -1,12 +1,9 @@
 library funxtion_sdk;
 
-import 'dart:convert';
-import 'dart:developer';
 
 import 'package:dio_http_cache/dio_http_cache.dart';
-import 'package:flutter/services.dart';
+import 'package:flutter/material.dart';
 import 'package:funxtion/Constant/constant_apis.dart';
-
 
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:dio/dio.dart';
@@ -14,15 +11,17 @@ import 'package:dio/dio.dart';
 part 'Network/list_workouts_request.dart';
 part 'Model/workout_model.dart';
 
-part 'Model/Helper/helper_model.dart';
+part 'Model/Model Helper/model_helper.dart';
+
+part 'Network/Network helper/network_helper.dart';
 
 part 'Network/get_a_workout.request.dart';
 
+part 'Constant/request_exception.dart';
 
-part 'Network/list_exercise_request.dart';
+part 'Network/exercise_request.dart';
 part 'Model/exercise_model.dart';
 
-part 'Network/get_a_exercise_request.dart';
 
 
 part 'Network/list_training_plans_request.dart';
@@ -99,14 +98,5 @@ part 'Model/fitness_activity_type_model.dart';
 
 part 'Network/auth_requests.dart';
 
-Dio dio = Dio(BaseOptions(
-  baseUrl: "https://api-staging.funxtion.com/v3/",
-  headers: {
-    "X-Scope": "platform",
-    'Content-Type': 'application/json',
-    "Authorization": token != null ? "Bearer $token" : ''
-  },
-));
 
-DioCacheManager? _dioCacheManager;
-String? token;
+

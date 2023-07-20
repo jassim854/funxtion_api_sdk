@@ -6,7 +6,7 @@ class ListEquipmentRequest {
     // dio.interceptors.add(_dioCacheManager?.interceptor);
     var response = await dio.get(
       ConstantApis.listEquipmentApi,
-      options: buildCacheOptions(Duration(days: 7), forceRefresh: true),
+      options: buildCacheOptions(const Duration(days: 7), forceRefresh: true),
     );
     if (response.statusCode == 200) {
       List<EquipmentModel> m = List.from(

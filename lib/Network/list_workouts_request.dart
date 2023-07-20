@@ -6,12 +6,13 @@ class ListWorkoutRequest {
     // dio.interceptors.add(_dioCacheManager?.interceptor);
     var response = await dio.get(
       ConstantApis.listWorkoutApi,
-      options: buildCacheOptions(Duration(days: 7), forceRefresh: true),
+      options: buildCacheOptions(const Duration(days: 7), forceRefresh: true),
     );
     if (response.statusCode == 200) {
       List<WorkoutModel> m =
           List.from(response.data['data'].map((e) => WorkoutModel.fromJson(e)));
       return m;
     }
+    return null;
   }
 }

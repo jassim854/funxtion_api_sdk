@@ -10,9 +10,9 @@ class ExerciseModel {
   List<int> muscleGroups;
   List<int> equipment;
   List<int> types;
-  var video;
-  var gif;
-  var image;
+  dynamic video;
+  dynamic gif;
+  dynamic image;
   List? steps;
   ExerciseModel(
       {required this.id,
@@ -45,8 +45,9 @@ class ExerciseModel {
         gif: json["gif"] is Map ? Imag.fromJson(json['gif']) : json['gif'],
         image:
             json["image"] is Map ? Imag.fromJson(json['image']) : json['image'],
-        steps:
-            json.containsKey('steps') ? List.from(json["steps"]['en']) : null,
+        steps: json.containsKey('steps')
+            ? List.from(json["steps"].map((e) => e['en']))
+            : null,
       );
 
   Map<String, dynamic> toJson() => {

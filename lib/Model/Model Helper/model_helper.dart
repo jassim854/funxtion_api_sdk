@@ -207,7 +207,7 @@ class Set {
 class GoalTarget {
   String type;
   String metric;
-  int value;
+  dynamic value;
 
   GoalTarget({
     required this.type,
