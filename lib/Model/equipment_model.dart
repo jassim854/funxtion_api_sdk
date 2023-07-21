@@ -4,10 +4,10 @@ class EquipmentModel {
   int id;
   String name;
   String slug;
-  var brandId;
+  dynamic brandId;
   List<dynamic> categories;
-  var description;
-  var image;
+  dynamic description;
+  dynamic image;
 
   EquipmentModel({
     required this.id,

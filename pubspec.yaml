@@ -8,7 +8,8 @@ environment:
   flutter: ">=1.17.0"
 
 dependencies:
-  dio_http_cache: ^0.3.0
+  dio_http_cache: any
+  dio: any
   flutter:
     sdk: flutter
  

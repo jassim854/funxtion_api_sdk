@@ -5,7 +5,7 @@ class WorkoutModel {
   String title;
   String slug;
   String? des;
-  var image;
+  dynamic image;
   String gender;
   String level;
   String duration;

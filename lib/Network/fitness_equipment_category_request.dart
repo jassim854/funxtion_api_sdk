@@ -1,39 +1,44 @@
 part of funxtion_sdk;
 
-class ExerciseRequest {
-  static Future<List<ExerciseModel>?> listOfExercise() async {
+class FitnessEquipmentCategoryRequest {
+ static Future<List<FitnessEquipmentCategoryModel>?>
+      listOfFitnessEquipmentCategories() async {
     NetwoerkHelper netwoerkHelper = NetwoerkHelper();
-
     try {
       _dioCacheManager = DioCacheManager(CacheConfig());
       netwoerkHelper.dio.interceptors.add(_dioCacheManager?.interceptor);
-      var response = await netwoerkHelper.getListOfExerciseRequest();
-
+      var response =
+          await netwoerkHelper.getListOfFitnessEquipmentCategoriesRequest();
       if (response.statusCode == 200) {
-        List<ExerciseModel> data = List<ExerciseModel>.from(
-            response.data["data"].map((x) => ExerciseModel.fromJson(x)));
-
+        List<FitnessEquipmentCategoryModel> data = List.from(response
+            .data['data']
+            .map((e) => FitnessEquipmentCategoryModel.fromJson(e)));
         return data;
       }
     } on DioError catch (e) {
       throw convertDioErrorToRequestException(e);
     }
+
     return null;
   }
 
-  static Future<ExerciseModel?> exerciseById(String id) async {
+static  Future<FitnessEquipmentCategoryModel?> fitnessEquipmentCategoryById(
+     String id) async {
     NetwoerkHelper netwoerkHelper = NetwoerkHelper();
     try {
       _dioCacheManager = DioCacheManager(CacheConfig());
       netwoerkHelper.dio.interceptors.add(_dioCacheManager?.interceptor);
-      var response = await netwoerkHelper.getExerciseByIdRequest(id);
+      var response =
+          await netwoerkHelper.getFitnessEquipmentCategoryRequest(id);
       if (response.statusCode == 200) {
-        ExerciseModel data = ExerciseModel.fromJson(response.data);
-        return data;
+        FitnessEquipmentCategoryModel m =
+            FitnessEquipmentCategoryModel.fromJson(response.data);
+        return m;
       }
     } on DioError catch (e) {
       throw convertDioErrorToRequestException(e);
     }
+
     return null;
   }
 }

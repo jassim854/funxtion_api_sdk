@@ -3,16 +3,14 @@ part of funxtion_sdk;
 class AuthRequest {
   static Future<bool> loginUser(
       {required String username, required String password}) async {
+    NetwoerkHelper netwoerkHelper = NetwoerkHelper();
+
     try {
-   _dioCacheManager = DioCacheManager(CacheConfig());
-    dio.interceptors.add(_dioCacheManager?.interceptor);
-      var response = await dio.post(
-        "auth/token",
-        data: {"username": username, "password": password},
-        options: buildCacheOptions(const Duration(hours: 4), forceRefresh: false),
-      );
+      _dioCacheManager = DioCacheManager(CacheConfig());
+      netwoerkHelper.dio.interceptors
+          .add(_dioCacheManager?.interceptor);
+      var response = await netwoerkHelper.postAuthRequest(username, password);
       if (response.statusCode == 200) {
-        token = '';
         token = response.data['token'].toString();
         return true;
       }
