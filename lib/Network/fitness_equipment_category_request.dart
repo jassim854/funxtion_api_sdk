@@ -1,14 +1,14 @@
 part of funxtion_sdk;
 
 class FitnessEquipmentCategoryRequest {
- static Future<List<FitnessEquipmentCategoryModel>?>
-      listOfFitnessEquipmentCategories() async {
+  static Future<List<FitnessEquipmentCategoryModel>?>
+      listOfFitnessEquipmentCategories({ Duration? maxAge ,bool?forceRefresh,Duration? maxStale}) async {
     NetwoerkHelper netwoerkHelper = NetwoerkHelper();
     try {
       _dioCacheManager = DioCacheManager(CacheConfig());
       netwoerkHelper.dio.interceptors.add(_dioCacheManager?.interceptor);
       var response =
-          await netwoerkHelper.getListOfFitnessEquipmentCategoriesRequest();
+          await netwoerkHelper.getListOfFitnessEquipmentCategoriesRequest(maxAge:maxAge??const Duration(days: 7),forceRefresh: forceRefresh??true,maxStale: maxStale );
       if (response.statusCode == 200) {
         List<FitnessEquipmentCategoryModel> data = List.from(response
             .data['data']
@@ -22,18 +22,18 @@ class FitnessEquipmentCategoryRequest {
     return null;
   }
 
-static  Future<FitnessEquipmentCategoryModel?> fitnessEquipmentCategoryById(
-     String id) async {
+  static Future<FitnessEquipmentCategoryModel?> fitnessEquipmentCategoryById(
+     {required String id, Duration? maxAge ,bool?forceRefresh,Duration? maxStale}) async {
     NetwoerkHelper netwoerkHelper = NetwoerkHelper();
     try {
       _dioCacheManager = DioCacheManager(CacheConfig());
       netwoerkHelper.dio.interceptors.add(_dioCacheManager?.interceptor);
       var response =
-          await netwoerkHelper.getFitnessEquipmentCategoryRequest(id);
+          await netwoerkHelper.getFitnessEquipmentCategoryRequest(id: id,maxAge: maxAge??const Duration(days: 7),forceRefresh: forceRefresh,maxStale: maxStale);
       if (response.statusCode == 200) {
-        FitnessEquipmentCategoryModel m =
+        FitnessEquipmentCategoryModel data =
             FitnessEquipmentCategoryModel.fromJson(response.data);
-        return m;
+        return data;
       }
     } on DioError catch (e) {
       throw convertDioErrorToRequestException(e);
