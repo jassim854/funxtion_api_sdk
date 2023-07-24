@@ -2,8 +2,8 @@ part of funxtion_sdk;
 
 class TrainingPlanModel {
   String id;
-  var title;
-  var description;
+  dynamic title;
+  dynamic description;
   List<int> goals;
   List<int> types;
   String level;
@@ -11,7 +11,7 @@ class TrainingPlanModel {
   List<dynamic> contentPackages;
   DateTime createdAt;
   DateTime updatedAt;
-  var image;
+  dynamic image;
   int? weeksTotal;
   int? daysTotal;
   List<Week>? weeks;

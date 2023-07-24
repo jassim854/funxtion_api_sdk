@@ -5,8 +5,8 @@ class OnDemandModel {
   String title;
   String? description;
   String type;
-  var video;
-  var image;
+  dynamic video;
+  dynamic image;
   String? language;
   String instructorId;
   String level;
