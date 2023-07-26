@@ -1,12 +1,16 @@
+// import 'package:dio/dio.dart';
 // import 'package:flutter_test/flutter_test.dart';
 
-// import 'package:funxtion_sdk/funxtion_sdk.dart';
+// import 'package:funxtion/funxtion_sdk.dart';
 
 // void main() {
-//   test('adds one to input values', () {
-//     final calculator = Calculator();
-//     expect(calculator.addOne(2), 3);
-//     expect(calculator.addOne(-7), -6);
-//     expect(calculator.addOne(0), 1);
+//   test('check', () async {
+//     Future<int> actual() async {
+//       var a = await ExerciseRequest.listOfExercise(maxAge: Duration(days: 7));
+//       print(a?.length);
+//       return a?.length ?? 0;
+//     }
+
+//     expect(actual(), Future.value(20));
 //   });
 // }

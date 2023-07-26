@@ -5,7 +5,7 @@ class ExerciseModel {
   String name;
   String slug;
   String level;
-  String gender;
+  String instructorGender;
   dynamic orientation;
   List<int> muscleGroups;
   List<int> equipment;
@@ -19,7 +19,7 @@ class ExerciseModel {
       required this.name,
       required this.slug,
       required this.level,
-      required this.gender,
+      required this.instructorGender,
       this.orientation,
       required this.muscleGroups,
       required this.equipment,
@@ -35,7 +35,7 @@ class ExerciseModel {
             json['name'] is Map ? json["name"]['en'].toString() : json['name'],
         slug: json["slug"],
         level: json["level"],
-        gender: json["gender"],
+        instructorGender: json["gender"],
         orientation: json["orientation"],
         muscleGroups: List<int>.from(json["muscle_groups"].map((x) => x)),
         equipment: List<int>.from(json["equipment"].map((x) => x)),
@@ -55,7 +55,7 @@ class ExerciseModel {
         "name": name,
         "slug": slug,
         "level": level,
-        "gender": gender,
+        "gender": instructorGender,
         "orientation": orientation,
         "muscle_groups": List<dynamic>.from(muscleGroups.map((x) => x)),
         "equipment": List<dynamic>.from(equipment.map((x) => x)),

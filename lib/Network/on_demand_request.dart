@@ -1,16 +1,44 @@
-
 part of funxtion_sdk;
 
 class OnDemandRequest {
-  Future<List<OnDemandModel>?> listOnDemand({ Duration? maxAge ,bool?forceRefresh,Duration? maxStale}) async {
+  static Future<List<OnDemandModel>?> listOnDemand({
+    Duration? maxAge,
+    bool? forceRefresh,
+    Duration? maxStale,
+    String? whereCategoriesIdIsEqualTo,
+    String? whereCategoriesIdsAre,
+    String? whereDurationIsEqualTo,
+    String? whereEquipmentIdIsEqualTo,
+    String? whereEquipmentIdsAre,
+    String? whereInstructorsIdIsEqualTo,
+    String? whereInstructorsIdsAre,
+    String? whereLimitContentPerPageIsEqualTo,
+    String? whereLocationIsEqualTo,
+    String? whereNameIsEqualTo,
+    String? whereOrderingAccordingToNameEqualTo,
+    String? wherePageNumberIsEqualTo,
+  }) async {
     NetwoerkHelper netwoerkHelper = NetwoerkHelper();
     try {
       _dioCacheManager = DioCacheManager(CacheConfig());
       netwoerkHelper.dio.interceptors.add(_dioCacheManager?.interceptor);
       var response = await netwoerkHelper.getListOnDemandRequest(
-maxAge: maxAge??const Duration(days: 7),
-forceRefresh: forceRefresh??true,
-maxStale: maxStale
+        maxAge: maxAge ?? const Duration(days: 7),
+        forceRefresh: forceRefresh ?? true,
+        maxStale: maxStale,
+        whereCategoriesIdIsEqualTo: whereCategoriesIdIsEqualTo,
+        whereCategoriesIdsAre: whereCategoriesIdsAre,
+        whereDurationIsEqualTo: whereDurationIsEqualTo,
+        whereEquipmentIdIsEqualTo: whereEquipmentIdIsEqualTo,
+        whereEquipmentIdsAre: whereEquipmentIdsAre,
+        whereInstructorsIdIsEqualTo: whereInstructorsIdIsEqualTo,
+        whereInstructorsIdsAre: whereInstructorsIdsAre,
+        whereLimitContentPerPageIsEqualTo: whereLimitContentPerPageIsEqualTo,
+        whereLocationIsEqualTo: whereLocationIsEqualTo,
+        whereNameIsEqualTo: whereNameIsEqualTo,
+        whereOrderingAccordingToNameEqualTo:
+            whereOrderingAccordingToNameEqualTo,
+        wherePageNumberIsEqualTo: wherePageNumberIsEqualTo,
       );
       if (response.statusCode == 200) {
         List<OnDemandModel> data = List.from(
@@ -24,12 +52,20 @@ maxStale: maxStale
     }
   }
 
-  Future<OnDemandModel?> onDemandById({required String id, Duration? maxAge ,bool?forceRefresh,Duration? maxStale}) async {
+  static Future<OnDemandModel?> onDemandById(
+      {required String id,
+      Duration? maxAge,
+      bool? forceRefresh,
+      Duration? maxStale}) async {
     NetwoerkHelper netwoerkHelper = NetwoerkHelper();
     try {
       _dioCacheManager = DioCacheManager(CacheConfig());
       netwoerkHelper.dio.interceptors.add(_dioCacheManager?.interceptor);
-      var response = await netwoerkHelper.getOnDemandByIdRequest(id: id,maxAge: maxAge??const Duration(days: 7),forceRefresh: forceRefresh??true,maxStale: maxStale);
+      var response = await netwoerkHelper.getOnDemandByIdRequest(
+          id: id,
+          maxAge: maxAge ?? const Duration(days: 7),
+          forceRefresh: forceRefresh ?? true,
+          maxStale: maxStale);
       if (response.statusCode == 200) {
         OnDemandModel data = OnDemandModel.fromJson(response.data);
         return data;

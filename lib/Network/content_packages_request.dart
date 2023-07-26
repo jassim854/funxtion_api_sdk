@@ -2,7 +2,7 @@
 part of funxtion_sdk;
 
 class ContentPackageRequest {
-  Future<List<ContentPackageModel>?> listOfContentPackages({ Duration? maxAge ,bool?forceRefresh,Duration? maxStale}) async {
+ static Future<List<ContentPackageModel>?> listOfContentPackages({ Duration? maxAge ,bool?forceRefresh,Duration? maxStale}) async {
     NetwoerkHelper netwoerkHelper = NetwoerkHelper();
     try {
       _dioCacheManager = DioCacheManager(CacheConfig());
@@ -23,7 +23,7 @@ maxStale: maxStale
     }
   }
 
-  Future<ContentPackageModel?> contentPackagetById({required String id, Duration? maxAge ,bool?forceRefresh,Duration? maxStale}) async {
+static  Future<ContentPackageModel?> contentPackagetById({required String id, Duration? maxAge ,bool?forceRefresh,Duration? maxStale}) async {
     NetwoerkHelper netwoerkHelper = NetwoerkHelper();
     try {
       _dioCacheManager = DioCacheManager(CacheConfig());

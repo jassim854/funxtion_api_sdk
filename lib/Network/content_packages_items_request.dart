@@ -1,7 +1,7 @@
 part of funxtion_sdk;
 
 class ListContentPackageItemRequest {
-  Future<ContentPackageItemsModel?> getListOfContentPackagesItem(
+ static Future<ContentPackageItemsModel?> getListOfContentPackagesItem(
    {required String id, Duration? maxAge ,bool?forceRefresh,Duration? maxStale}) async {
     NetwoerkHelper netwoerkHelper = NetwoerkHelper();
     try {
