@@ -30,69 +30,13 @@ class NetwoerkHelper {
     );
   }
 
-  Future<Response> getListOfExerciseRequest({
-    required Duration maxAge,
-    bool? forceRefresh,
-    Duration? maxStale,
-    String? whereOrderingAccordingToNameEqualTo,
-    String? wherePageNumberIsEqualTo,
-    String? whereLimitContentPerPageIsEqualTo,
-    String? whereExerciseNameContains,
-    String? whereLevelFieldEqualTo,
-    String? whereEquipmentIdsAre,
-    String? whereEquipmentBrandsAre,
-    String? whereOrientationIsEqualTo,
-    String? whereMuscleGroupIdsAre,
-    String? whereContentCategoriesIdsAre,
-    String? whereGoalMetricsIsEqualTo,
-    String? whereInstructorGenderIsEqualTo,
-    String? whereResistanceMetricsIsEqualTo,
-    String? whereEquipmentIdIsEqualTo,
-    String? whereEquipmentBrandsIsEqualTo,
-    String? whereMuscleGroupIdIsEqualTo,
-    String? whereContentCategoriesIdIsEqualTo,
-  }) async {
+  Future<Response> getListOfExerciseRequest(
+      {required Duration maxAge,
+      bool? forceRefresh,
+      Duration? maxStale,
+      Map<String, dynamic>? queryParameters}) async {
     return await dio.get(ConstantApis.listExerciseApi,
-        queryParameters: {
-          if (whereOrderingAccordingToNameEqualTo != null)
-            "filter[order][name]": whereOrderingAccordingToNameEqualTo,
-          if (whereLimitContentPerPageIsEqualTo != null)
-            "filter[limit]": whereLimitContentPerPageIsEqualTo,
-          if (wherePageNumberIsEqualTo != null)
-            "filter[offset]": wherePageNumberIsEqualTo,
-          if (whereExerciseNameContains != null)
-            "filter[where][q][contains]": whereExerciseNameContains,
-          if (whereLevelFieldEqualTo != null)
-            "filter[where][level][eq]": whereLevelFieldEqualTo,
-          if (whereEquipmentIdsAre != null)
-            "filter[where][equipment.ids][in]": whereEquipmentIdsAre,
-          if (whereEquipmentIdIsEqualTo != null)
-            "filter[where][equipment.ids][eq]": whereEquipmentIdIsEqualTo,
-          if (whereEquipmentBrandsAre != null)
-            "filter[where][equipment.brand][in]": whereEquipmentBrandsAre,
-          if (whereEquipmentBrandsIsEqualTo != null)
-            "filter[where][equipment.brand][eq]": whereEquipmentBrandsIsEqualTo,
-          if (whereOrientationIsEqualTo != null)
-            "filter[where][orientation][contains]": whereOrientationIsEqualTo,
-          if (whereMuscleGroupIdsAre != null)
-            "filter[where][muscle_groups.ids][in]": whereMuscleGroupIdsAre,
-          if (whereMuscleGroupIdIsEqualTo != null)
-            "filter[where][muscle_groups.ids][eq]": whereMuscleGroupIdIsEqualTo,
-          if (whereContentCategoriesIdsAre != null)
-            "filter[where][content_categories.ids][in]":
-                whereContentCategoriesIdsAre,
-          if (whereContentCategoriesIdIsEqualTo != null)
-            "filter[where][content_categories.ids][eq]":
-                whereContentCategoriesIdIsEqualTo,
-          if (whereGoalMetricsIsEqualTo != null)
-            "filter[where][goal metrics][contains]": whereGoalMetricsIsEqualTo,
-          if (whereInstructorGenderIsEqualTo != null)
-            "filter[where][instructor_gender][contains]":
-                whereInstructorGenderIsEqualTo,
-          if (whereResistanceMetricsIsEqualTo != null)
-            "filter[where][resistance metrics][contains]":
-                whereResistanceMetricsIsEqualTo
-        },
+        queryParameters: queryParameters,
         options: buildCacheOptions(maxAge,
             forceRefresh: forceRefresh, maxStale: maxStale));
   }
@@ -109,54 +53,14 @@ class NetwoerkHelper {
     );
   }
 
-  Future<Response> getListOfWorkoutRequest({
-    required Duration maxAge,
-    bool? forceRefresh,
-    Duration? maxStale,
-    String? whereOrderingAccordingToNameEqualTo,
-    String? wherePageNumberIsEqualTo,
-    String? whereLimitContentPerPageIsEqualTo,
-    String? whereWorkoutNameContains,
-    String? whereGoalIdsAre,
-    String? whereLevelFieldEqualTo,
-    String? whereBodyPartsIdsAre,
-    String? whereDurationIsEqualTo,
-    String? whereGoalIdIsEqualTo,
-    String? whereBodyPartIdIsEqualTo,
-    String? whereTypeIdIsEqualTo,
-    String? whereTypeIdsAre,
-    String? whereLocationIsEqualTo,
-  }) async {
+  Future<Response> getListOfWorkoutRequest(
+      {required Duration maxAge,
+      bool? forceRefresh,
+      Duration? maxStale,
+      Map<String, dynamic>? queryParameters}) async {
     return await dio.get(
       ConstantApis.listWorkoutApi,
-      queryParameters: {
-        if (whereOrderingAccordingToNameEqualTo != null)
-          "filter[order][name]": whereOrderingAccordingToNameEqualTo,
-        if (whereLimitContentPerPageIsEqualTo != null)
-          "filter[limit]": whereLimitContentPerPageIsEqualTo,
-        if (wherePageNumberIsEqualTo != null)
-          "filter[offset]": wherePageNumberIsEqualTo,
-        if (whereWorkoutNameContains != null)
-          "filter[where][q][contains]": whereWorkoutNameContains,
-        if (whereLevelFieldEqualTo != null)
-          "filter[where][level][eq]": whereLevelFieldEqualTo,
-        if (whereGoalIdsAre != null)
-          "filter[where][goals][in]": whereGoalIdsAre,
-        if (whereGoalIdIsEqualTo != null)
-          "filter[where][goals][eq]": whereGoalIdIsEqualTo,
-        if (whereBodyPartsIdsAre != null)
-          "filter[where][body_parts][in]": whereBodyPartsIdsAre,
-        if (whereBodyPartIdIsEqualTo != null)
-          "filter[where][body_parts][eq]": whereBodyPartIdIsEqualTo,
-        if (whereDurationIsEqualTo != null)
-          "filter[where][duration][eq]": whereDurationIsEqualTo,
-        if (whereTypeIdsAre != null)
-          "filter[where][types][in]": whereTypeIdsAre,
-        if (whereTypeIdIsEqualTo != null)
-          "filter[where][types][eq]": whereTypeIdIsEqualTo,
-        if (whereLocationIsEqualTo != null)
-          "filter[where][location][eq]": whereLocationIsEqualTo,
-      },
+      queryParameters: queryParameters,
       options: buildCacheOptions(maxAge,
           forceRefresh: forceRefresh, maxStale: maxStale),
     );
@@ -178,38 +82,11 @@ class NetwoerkHelper {
     required Duration maxAge,
     bool? forceRefresh,
     Duration? maxStale,
-    String? whereOrderingAccordingToNameEqualTo,
-    String? wherePageNumberIsEqualTo,
-    String? whereLimitContentPerPageIsEqualTo,
-    String? whereGoalIdsAre,
-    String? whereLevelFieldEqualTo,
-    String? whereGoalIdIsEqualTo,
-    String? whereDaysPerWeekIsEqualTo,
-    String? whereNameIsEqualTo,
-    String? whereLocationIsEqualTo,
+    Map<String, dynamic>? queryParameters,
   }) async {
     return await dio.get(
       ConstantApis.listTrainingPlanApi,
-      queryParameters: {
-        if (whereOrderingAccordingToNameEqualTo != null)
-          "filter[order][name]": whereOrderingAccordingToNameEqualTo,
-        if (whereLimitContentPerPageIsEqualTo != null)
-          "filter[limit]": whereLimitContentPerPageIsEqualTo,
-        if (wherePageNumberIsEqualTo != null)
-          "filter[offset]": wherePageNumberIsEqualTo,
-        if (whereNameIsEqualTo != null)
-          "filter[where][q][contains]": whereNameIsEqualTo,
-        if (whereLevelFieldEqualTo != null)
-          "filter[where][level][eq]": whereLevelFieldEqualTo,
-        if (whereGoalIdsAre != null)
-          "filter[where][goals][in]": whereGoalIdsAre,
-        if (whereGoalIdIsEqualTo != null)
-          "filter[where][goals][eq]": whereGoalIdIsEqualTo,
-        if (whereDaysPerWeekIsEqualTo != null)
-          "filter[where][days_per_week][eq]": whereDaysPerWeekIsEqualTo,
-        if (whereLocationIsEqualTo != null)
-          "filter[where][location][eq]": whereLocationIsEqualTo,
-      },
+      queryParameters: queryParameters,
       options: buildCacheOptions(maxAge,
           forceRefresh: forceRefresh, maxStale: maxStale),
     );
@@ -227,34 +104,14 @@ class NetwoerkHelper {
     );
   }
 
-  Future<Response> getListOfEquipmentRequest({
-    required Duration maxAge,
-    bool? forceRefresh,
-    Duration? maxStale,
-    String? whereOrderingAccordingToNameEqualTo,
-    String? wherePageNumberIsEqualTo,
-    String? whereLimitContentPerPageIsEqualTo,
-    String? whereIdIsEqualTo,
-    String? whereIdsAre,
-    String? whereNameContains,
-    String? whereSlugNameIsEqualTo,
-  }) async {
+  Future<Response> getListOfEquipmentRequest(
+      {required Duration maxAge,
+      bool? forceRefresh,
+      Duration? maxStale,
+      Map<String, dynamic>? queryParameters}) async {
     return await dio.get(
       ConstantApis.listEquipmentApi,
-      queryParameters: {
-        if (whereOrderingAccordingToNameEqualTo != null)
-          "filter[order][name]": whereOrderingAccordingToNameEqualTo,
-        if (whereLimitContentPerPageIsEqualTo != null)
-          "filter[limit]": whereLimitContentPerPageIsEqualTo,
-        if (wherePageNumberIsEqualTo != null)
-          "filter[offset]": wherePageNumberIsEqualTo,
-        if (whereIdIsEqualTo != null) "filter[where][id][eq]": whereIdIsEqualTo,
-        if (whereIdsAre != null) "filter[where][id][in]": whereIdsAre,
-        if (whereNameContains != null)
-          "filter[where][name][contains]": whereNameContains,
-        if (whereSlugNameIsEqualTo != null)
-          "filter[where][slug][eq]": whereSlugNameIsEqualTo,
-      },
+      queryParameters: queryParameters,
       options: buildCacheOptions(maxAge,
           forceRefresh: forceRefresh, maxStale: maxStale),
     );
@@ -272,34 +129,14 @@ class NetwoerkHelper {
     );
   }
 
-  Future<Response> getListOfFitnessEquipmentCategoriesRequest({
-    required Duration maxAge,
-    bool? forceRefresh,
-    Duration? maxStale,
-    String? whereOrderingAccordingToNameEqualTo,
-    String? wherePageNumberIsEqualTo,
-    String? whereLimitContentPerPageIsEqualTo,
-    String? whereIdIsEqualTo,
-    String? whereIdsAre,
-    String? whereNameContains,
-    String? whereSlugNameIsEqualTo,
-  }) async {
+  Future<Response> getListOfFitnessEquipmentCategoriesRequest(
+      {required Duration maxAge,
+      bool? forceRefresh,
+      Duration? maxStale,
+      Map<String, dynamic>? queryParameters}) async {
     return await dio.get(
       ConstantApis.listFitnessEquipmentCategoriesApi,
-      queryParameters: {
-        if (whereOrderingAccordingToNameEqualTo != null)
-          "filter[order][name]": whereOrderingAccordingToNameEqualTo,
-        if (whereLimitContentPerPageIsEqualTo != null)
-          "filter[limit]": whereLimitContentPerPageIsEqualTo,
-        if (wherePageNumberIsEqualTo != null)
-          "filter[offset]": wherePageNumberIsEqualTo,
-        if (whereIdIsEqualTo != null) "filter[where][id][eq]": whereIdIsEqualTo,
-        if (whereIdsAre != null) "filter[where][id][in]": whereIdsAre,
-        if (whereNameContains != null)
-          "filter[where][name][contains]": whereNameContains,
-        if (whereSlugNameIsEqualTo != null)
-          "filter[where][slug][eq]": whereSlugNameIsEqualTo,
-      },
+      queryParameters: queryParameters,
       options: buildCacheOptions(maxAge,
           forceRefresh: forceRefresh, maxStale: maxStale),
     );
@@ -318,34 +155,14 @@ class NetwoerkHelper {
     );
   }
 
-  Future<Response> getListOfFitnessGoalRequest({
-    required Duration maxAge,
-    bool? forceRefresh,
-    Duration? maxStale,
-    String? whereOrderingAccordingToNameEqualTo,
-    String? wherePageNumberIsEqualTo,
-    String? whereLimitContentPerPageIsEqualTo,
-    String? whereIdIsEqualTo,
-    String? whereIdsAre,
-    String? whereNameContains,
-    String? whereSlugNameIsEqualTo,
-  }) async {
+  Future<Response> getListOfFitnessGoalRequest(
+      {required Duration maxAge,
+      bool? forceRefresh,
+      Duration? maxStale,
+      Map<String, dynamic>? queryParameters}) async {
     return await dio.get(
       ConstantApis.listFitnessGoalApi,
-      queryParameters: {
-        if (whereOrderingAccordingToNameEqualTo != null)
-          "filter[order][name]": whereOrderingAccordingToNameEqualTo,
-        if (whereLimitContentPerPageIsEqualTo != null)
-          "filter[limit]": whereLimitContentPerPageIsEqualTo,
-        if (wherePageNumberIsEqualTo != null)
-          "filter[offset]": wherePageNumberIsEqualTo,
-        if (whereIdIsEqualTo != null) "filter[where][id][eq]": whereIdIsEqualTo,
-        if (whereIdsAre != null) "filter[where][id][in]": whereIdsAre,
-        if (whereNameContains != null)
-          "filter[where][name][contains]": whereNameContains,
-        if (whereSlugNameIsEqualTo != null)
-          "filter[where][slug][eq]": whereSlugNameIsEqualTo,
-      },
+      queryParameters: queryParameters,
       options: buildCacheOptions(maxAge,
           forceRefresh: forceRefresh, maxStale: maxStale),
     );
@@ -386,51 +203,14 @@ class NetwoerkHelper {
     );
   }
 
-  Future<Response> getListOnDemandRequest({
-    required Duration maxAge,
-    bool? forceRefresh,
-    Duration? maxStale,
-    String? whereOrderingAccordingToNameEqualTo,
-    String? wherePageNumberIsEqualTo,
-    String? whereLimitContentPerPageIsEqualTo,
-    String? whereEquipmentIdIsEqualTo,
-    String? whereInstructorsIdsAre,
-    String? whereEquipmentIdsAre,
-    String? whereDurationIsEqualTo,
-    String? whereCategoriesIdsAre,
-    String? whereNameIsEqualTo,
-    String? whereCategoriesIdIsEqualTo,
-    String? whereInstructorsIdIsEqualTo,
-    String? whereLocationIsEqualTo,
-  }) async {
+  Future<Response> getListOnDemandRequest(
+      {required Duration maxAge,
+      bool? forceRefresh,
+      Duration? maxStale,
+      Map<String, dynamic>? queryParameters}) async {
     return await dio.get(
       ConstantApis.listOnDemandApi,
-      queryParameters: {
-        if (whereOrderingAccordingToNameEqualTo != null)
-          "filter[order][name]": whereOrderingAccordingToNameEqualTo,
-        if (whereLimitContentPerPageIsEqualTo != null)
-          "filter[limit]": whereLimitContentPerPageIsEqualTo,
-        if (wherePageNumberIsEqualTo != null)
-          "filter[offset]": wherePageNumberIsEqualTo,
-        if (whereLocationIsEqualTo != null)
-          "filter[where][location][eq]": whereLocationIsEqualTo,
-        if (whereDurationIsEqualTo != null)
-          "filter[where][duration][eq]": whereDurationIsEqualTo,
-        if (whereInstructorsIdsAre != null)
-          "filter[where][instructor_id][in]": whereInstructorsIdsAre,
-        if (whereInstructorsIdIsEqualTo != null)
-          "filter[where][instructor_id][eq]": whereInstructorsIdIsEqualTo,
-        if (whereCategoriesIdsAre != null)
-          "filter[where][categories][in]": whereCategoriesIdsAre,
-        if (whereCategoriesIdIsEqualTo != null)
-          "filter[where][categories][eq]": whereCategoriesIdIsEqualTo,
-        if (whereNameIsEqualTo != null)
-          "filter[where][title][contains]": whereNameIsEqualTo,
-        if (whereEquipmentIdsAre != null)
-          "filter[where][equipment.ids][in]": whereEquipmentIdsAre,
-        if (whereEquipmentIdIsEqualTo != null)
-          "filter[where][equipment.ids][eq]": whereEquipmentIdIsEqualTo,
-      },
+      queryParameters: queryParameters,
       options: buildCacheOptions(maxAge,
           forceRefresh: forceRefresh, maxStale: maxStale),
     );
@@ -470,67 +250,27 @@ class NetwoerkHelper {
     );
   }
 
-  Future<Response> getListOnDemandCategoriesRequest({
-    required Duration maxAge,
-    bool? forceRefresh,
-    Duration? maxStale,
-    String? whereOrderingAccordingToNameEqualTo,
-    String? wherePageNumberIsEqualTo,
-    String? whereLimitContentPerPageIsEqualTo,
-    String? whereIdIsEqualTo,
-    String? whereIdsAre,
-    String? whereNameIsEqualTo,
-    String? whereSlugNameIsEqualTo,
-  }) async {
+  Future<Response> getListOnDemandCategoriesRequest(
+      {required Duration maxAge,
+      bool? forceRefresh,
+      Duration? maxStale,
+      Map<String, dynamic>? queryParameters}) async {
     return await dio.get(
       ConstantApis.listOnDemandCategoryApi,
-      queryParameters: {
-        if (whereOrderingAccordingToNameEqualTo != null)
-          "filter[order][name]": whereOrderingAccordingToNameEqualTo,
-        if (whereLimitContentPerPageIsEqualTo != null)
-          "filter[limit]": whereLimitContentPerPageIsEqualTo,
-        if (wherePageNumberIsEqualTo != null)
-          "filter[offset]": wherePageNumberIsEqualTo,
-        if (whereIdIsEqualTo != null) "filter[where][id][eq]": whereIdIsEqualTo,
-        if (whereIdsAre != null) "filter[where][id][in]": whereIdsAre,
-        if (whereNameIsEqualTo != null)
-          "filter[where][name][eq]": whereNameIsEqualTo,
-        if (whereSlugNameIsEqualTo != null)
-          "filter[where][slug][eq]": whereSlugNameIsEqualTo,
-      },
+      queryParameters: queryParameters,
       options: buildCacheOptions(maxAge,
           forceRefresh: forceRefresh, maxStale: maxStale),
     );
   }
 
-  Future<Response> getListOfMuscleGroupRequest({
-    required Duration maxAge,
-    bool? forceRefresh,
-    Duration? maxStale,
-    String? whereOrderingAccordingToNameEqualTo,
-    String? wherePageNumberIsEqualTo,
-    String? whereLimitContentPerPageIsEqualTo,
-    String? whereIdIsEqualTo,
-    String? whereIdsAre,
-    String? whereNameContains,
-    String? whereSlugNameIsEqualTo,
-  }) async {
+  Future<Response> getListOfMuscleGroupRequest(
+      {required Duration maxAge,
+      bool? forceRefresh,
+      Duration? maxStale,
+      Map<String, dynamic>? queryParameters}) async {
     return await dio.get(
       ConstantApis.listMuscleGroupApi,
-      queryParameters: {
-        if (whereOrderingAccordingToNameEqualTo != null)
-          "filter[order][name]": whereOrderingAccordingToNameEqualTo,
-        if (whereLimitContentPerPageIsEqualTo != null)
-          "filter[limit]": whereLimitContentPerPageIsEqualTo,
-        if (wherePageNumberIsEqualTo != null)
-          "filter[offset]": wherePageNumberIsEqualTo,
-        if (whereIdIsEqualTo != null) "filter[where][id][eq]": whereIdIsEqualTo,
-        if (whereIdsAre != null) "filter[where][id][in]": whereIdsAre,
-        if (whereNameContains != null)
-          "filter[where][name][contains]": whereNameContains,
-        if (whereSlugNameIsEqualTo != null)
-          "filter[where][slug][eq]": whereSlugNameIsEqualTo,
-      },
+      queryParameters: queryParameters,
       options: buildCacheOptions(maxAge,
           forceRefresh: forceRefresh, maxStale: maxStale),
     );
@@ -571,34 +311,14 @@ class NetwoerkHelper {
     );
   }
 
-  Future<Response> getBodyPartsRequest({
-    required Duration maxAge,
-    bool? forceRefresh,
-    Duration? maxStale,
-    String? whereOrderingAccordingToNameEqualTo,
-    String? wherePageNumberIsEqualTo,
-    String? whereLimitContentPerPageIsEqualTo,
-    String? whereIdIsEqualTo,
-    String? whereIdsAre,
-    String? whereNameContains,
-    String? whereSlugNameIsEqualTo,
-  }) async {
+  Future<Response> getBodyPartsRequest(
+      {required Duration maxAge,
+      bool? forceRefresh,
+      Duration? maxStale,
+      Map<String, dynamic>? queryParameters}) async {
     return await dio.get(
       ConstantApis.getBodyPartsApi,
-      queryParameters: {
-        if (whereOrderingAccordingToNameEqualTo != null)
-          "filter[order][name]": whereOrderingAccordingToNameEqualTo,
-        if (whereLimitContentPerPageIsEqualTo != null)
-          "filter[limit]": whereLimitContentPerPageIsEqualTo,
-        if (wherePageNumberIsEqualTo != null)
-          "filter[offset]": wherePageNumberIsEqualTo,
-        if (whereIdIsEqualTo != null) "filter[where][id][eq]": whereIdIsEqualTo,
-        if (whereIdsAre != null) "filter[where][id][in]": whereIdsAre,
-        if (whereNameContains != null)
-          "filter[where][name][contains]": whereNameContains,
-        if (whereSlugNameIsEqualTo != null)
-          "filter[where][slug][eq]": whereSlugNameIsEqualTo,
-      },
+      queryParameters: queryParameters,
       options: buildCacheOptions(maxAge,
           forceRefresh: forceRefresh, maxStale: maxStale),
     );

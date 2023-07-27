@@ -8,7 +8,7 @@ class ExerciseRequest {
     String? whereOrderingAccordingToNameEqualTo,
     String? wherePageNumberIsEqualTo,
     String? whereLimitContentPerPageIsEqualTo,
-    String? whereExerciseNameIsEqualTo,
+    String? whereExerciseNameContains,
 
     String? whereLevelFieldEqualTo,
     String? whereEquipmentIdIsEqualTo,
@@ -30,25 +30,46 @@ class ExerciseRequest {
       _dioCacheManager = DioCacheManager(CacheConfig());
       netwoerkHelper.dio.interceptors.add(_dioCacheManager?.interceptor);
       var response = await netwoerkHelper.getListOfExerciseRequest(
-          whereOrderingAccordingToNameEqualTo:
-              whereOrderingAccordingToNameEqualTo,
-          whereLimitContentPerPageIsEqualTo: whereLimitContentPerPageIsEqualTo,
-          wherePageNumberIsEqualTo: wherePageNumberIsEqualTo,
-          whereEquipmentIdIsEqualTo: whereEquipmentIdIsEqualTo,
-          whereLevelFieldEqualTo: whereLevelFieldEqualTo,
-          whereOrientationIsEqualTo: whereOrientationIsEqualTo,
-          whereContentCategoriesIdIsEqualTo: whereContentCategoriesIdIsEqualTo,
-          whereEquipmentBrandsIsEqualTo: whereEquipmentBrandsIsEqualTo,
-          whereExerciseNameContains: whereExerciseNameIsEqualTo,
-          whereGoalMetricsIsEqualTo: whereGoalMetricsIsEqualTo,
-          whereInstructorGenderIsEqualTo: whereInstructorGenderIsEqualTo,
-          
-          whereMuscleGroupIdIsEqualTo: whereMuscleGroupIdIsEqualTo,
-          whereResistanceMetricsIsEqualTo: whereResistanceMetricsIsEqualTo,
-          whereContentCategoriesIdsAre: whereContentCategoriesIdsAre,
-          whereEquipmentBrandsAre: whereEquipmentBrandsAre,
-          whereEquipmentIdsAre: whereEquipmentIdsAre,
-          whereMuscleGroupIdsAre: whereMuscleGroupIdsAre,
+      queryParameters: {
+           if (whereOrderingAccordingToNameEqualTo != null)
+            "filter[order][name]": whereOrderingAccordingToNameEqualTo,
+          if (whereLimitContentPerPageIsEqualTo != null)
+            "filter[limit]": whereLimitContentPerPageIsEqualTo,
+          if (wherePageNumberIsEqualTo != null)
+            "filter[offset]": wherePageNumberIsEqualTo,
+          if (whereExerciseNameContains != null)
+            "filter[where][q][contains]": whereExerciseNameContains,
+          if (whereLevelFieldEqualTo != null)
+            "filter[where][level][eq]": whereLevelFieldEqualTo,
+          if (whereEquipmentIdsAre != null)
+            "filter[where][equipment.ids][in]": whereEquipmentIdsAre,
+          if (whereEquipmentIdIsEqualTo != null)
+            "filter[where][equipment.ids][eq]": whereEquipmentIdIsEqualTo,
+          if (whereEquipmentBrandsAre != null)
+            "filter[where][equipment.brand][in]": whereEquipmentBrandsAre,
+          if (whereEquipmentBrandsIsEqualTo != null)
+            "filter[where][equipment.brand][eq]": whereEquipmentBrandsIsEqualTo,
+          if (whereOrientationIsEqualTo != null)
+            "filter[where][orientation][contains]": whereOrientationIsEqualTo,
+          if (whereMuscleGroupIdsAre != null)
+            "filter[where][muscle_groups.ids][in]": whereMuscleGroupIdsAre,
+          if (whereMuscleGroupIdIsEqualTo != null)
+            "filter[where][muscle_groups.ids][eq]": whereMuscleGroupIdIsEqualTo,
+          if (whereContentCategoriesIdsAre != null)
+            "filter[where][content_categories.ids][in]":
+                whereContentCategoriesIdsAre,
+          if (whereContentCategoriesIdIsEqualTo != null)
+            "filter[where][content_categories.ids][eq]":
+                whereContentCategoriesIdIsEqualTo,
+          if (whereGoalMetricsIsEqualTo != null)
+            "filter[where][goal metrics][contains]": whereGoalMetricsIsEqualTo,
+          if (whereInstructorGenderIsEqualTo != null)
+            "filter[where][instructor_gender][contains]":
+                whereInstructorGenderIsEqualTo,
+          if (whereResistanceMetricsIsEqualTo != null)
+            "filter[where][resistance metrics][contains]":
+                whereResistanceMetricsIsEqualTo
+      },
           maxAge: maxAge ?? const Duration(days: 7),
           forceRefresh: forceRefresh,
           maxStale: maxStale);

@@ -63,14 +63,20 @@ class ContentProviderCategoryOnDemandRequest {
         maxAge: maxAge ?? const Duration(days: 7),
         forceRefresh: forceRefresh ?? true,
         maxStale: maxStale,
-        whereIdIsEqualTo: whereIdIsEqualTo,
-        whereIdsAre: whereIdsAre,
-        whereLimitContentPerPageIsEqualTo: whereLimitContentPerPageIsEqualTo,
-        whereNameIsEqualTo: whereNameIsEqualTo,
-        whereOrderingAccordingToNameEqualTo:
-            whereOrderingAccordingToNameEqualTo,
-        wherePageNumberIsEqualTo: wherePageNumberIsEqualTo,
-        whereSlugNameIsEqualTo: whereSlugNameIsEqualTo,
+     queryParameters: {
+        if (whereOrderingAccordingToNameEqualTo != null)
+          "filter[order][name]": whereOrderingAccordingToNameEqualTo,
+        if (whereLimitContentPerPageIsEqualTo != null)
+          "filter[limit]": whereLimitContentPerPageIsEqualTo,
+        if (wherePageNumberIsEqualTo != null)
+          "filter[offset]": wherePageNumberIsEqualTo,
+        if (whereIdIsEqualTo != null) "filter[where][id][eq]": whereIdIsEqualTo,
+        if (whereIdsAre != null) "filter[where][id][in]": whereIdsAre,
+        if (whereNameIsEqualTo != null)
+          "filter[where][name][eq]": whereNameIsEqualTo,
+        if (whereSlugNameIsEqualTo != null)
+          "filter[where][slug][eq]": whereSlugNameIsEqualTo,
+      },
       );
       if (response.statusCode == 200) {
    List<ContentProvidersCategoryOnDemandModel> data = List.from(

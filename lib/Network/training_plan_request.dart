@@ -23,16 +23,26 @@ class TrainingPlanRequest {
         maxAge: maxAge ?? const Duration(days: 7),
         forceRefresh: forceRefresh ?? true,
         maxStale: maxStale,
-        whereDaysPerWeekIsEqualTo: whereDaysPerWeekIsEqualTo,
-        whereGoalIdIsEqualTo: whereGoalIdIsEqualTo,
-        whereGoalIdsAre: whereGoalIdsAre,
-        whereLevelFieldEqualTo: whereLevelFieldEqualTo,
-        whereLimitContentPerPageIsEqualTo: whereLimitContentPerPageIsEqualTo,
-        whereLocationIsEqualTo: whereLocationIsEqualTo,
-        whereNameIsEqualTo: whereNameIsEqualTo,
-        whereOrderingAccordingToNameEqualTo:
-            whereOrderingAccordingToNameEqualTo,
-        wherePageNumberIsEqualTo: wherePageNumberIsEqualTo,
+   queryParameters: {
+        if (whereOrderingAccordingToNameEqualTo != null)
+          "filter[order][name]": whereOrderingAccordingToNameEqualTo,
+        if (whereLimitContentPerPageIsEqualTo != null)
+          "filter[limit]": whereLimitContentPerPageIsEqualTo,
+        if (wherePageNumberIsEqualTo != null)
+          "filter[offset]": wherePageNumberIsEqualTo,
+        if (whereNameIsEqualTo != null)
+          "filter[where][q][contains]": whereNameIsEqualTo,
+        if (whereLevelFieldEqualTo != null)
+          "filter[where][level][eq]": whereLevelFieldEqualTo,
+        if (whereGoalIdsAre != null)
+          "filter[where][goals][in]": whereGoalIdsAre,
+        if (whereGoalIdIsEqualTo != null)
+          "filter[where][goals][eq]": whereGoalIdIsEqualTo,
+        if (whereDaysPerWeekIsEqualTo != null)
+          "filter[where][days_per_week][eq]": whereDaysPerWeekIsEqualTo,
+        if (whereLocationIsEqualTo != null)
+          "filter[where][location][eq]": whereLocationIsEqualTo,
+      },
       );
       if (response.statusCode == 200) {
         List<TrainingPlanModel> data = List.from(

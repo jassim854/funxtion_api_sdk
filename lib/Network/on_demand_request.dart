@@ -26,19 +26,32 @@ class OnDemandRequest {
         maxAge: maxAge ?? const Duration(days: 7),
         forceRefresh: forceRefresh ?? true,
         maxStale: maxStale,
-        whereCategoriesIdIsEqualTo: whereCategoriesIdIsEqualTo,
-        whereCategoriesIdsAre: whereCategoriesIdsAre,
-        whereDurationIsEqualTo: whereDurationIsEqualTo,
-        whereEquipmentIdIsEqualTo: whereEquipmentIdIsEqualTo,
-        whereEquipmentIdsAre: whereEquipmentIdsAre,
-        whereInstructorsIdIsEqualTo: whereInstructorsIdIsEqualTo,
-        whereInstructorsIdsAre: whereInstructorsIdsAre,
-        whereLimitContentPerPageIsEqualTo: whereLimitContentPerPageIsEqualTo,
-        whereLocationIsEqualTo: whereLocationIsEqualTo,
-        whereNameIsEqualTo: whereNameIsEqualTo,
-        whereOrderingAccordingToNameEqualTo:
-            whereOrderingAccordingToNameEqualTo,
-        wherePageNumberIsEqualTo: wherePageNumberIsEqualTo,
+     queryParameters:  {
+        if (whereOrderingAccordingToNameEqualTo != null)
+          "filter[order][name]": whereOrderingAccordingToNameEqualTo,
+        if (whereLimitContentPerPageIsEqualTo != null)
+          "filter[limit]": whereLimitContentPerPageIsEqualTo,
+        if (wherePageNumberIsEqualTo != null)
+          "filter[offset]": wherePageNumberIsEqualTo,
+        if (whereLocationIsEqualTo != null)
+          "filter[where][location][eq]": whereLocationIsEqualTo,
+        if (whereDurationIsEqualTo != null)
+          "filter[where][duration][eq]": whereDurationIsEqualTo,
+        if (whereInstructorsIdsAre != null)
+          "filter[where][instructor_id][in]": whereInstructorsIdsAre,
+        if (whereInstructorsIdIsEqualTo != null)
+          "filter[where][instructor_id][eq]": whereInstructorsIdIsEqualTo,
+        if (whereCategoriesIdsAre != null)
+          "filter[where][categories][in]": whereCategoriesIdsAre,
+        if (whereCategoriesIdIsEqualTo != null)
+          "filter[where][categories][eq]": whereCategoriesIdIsEqualTo,
+        if (whereNameIsEqualTo != null)
+          "filter[where][title][contains]": whereNameIsEqualTo,
+        if (whereEquipmentIdsAre != null)
+          "filter[where][equipment.ids][in]": whereEquipmentIdsAre,
+        if (whereEquipmentIdIsEqualTo != null)
+          "filter[where][equipment.ids][eq]": whereEquipmentIdIsEqualTo,
+      },
       );
       if (response.statusCode == 200) {
         List<OnDemandModel> data = List.from(

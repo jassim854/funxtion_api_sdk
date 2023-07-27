@@ -27,20 +27,34 @@ class WorkoutRequest {
         maxAge: maxAge ?? const Duration(days: 7),
         forceRefresh: forceRefresh ?? true,
         maxStale: maxStale,
-        whereBodyPartIdIsEqualTo: whereBodyPartIdIsEqualTo,
-        whereBodyPartsIdsAre: whereBodyPartsIdsAre,
-        whereDurationIsEqualTo: whereDurationIsEqualTo,
-        whereGoalIdIsEqualTo: whereGoalIdIsEqualTo,
-        whereGoalIdsAre: whereGoalIdsAre,
-        whereLevelFieldEqualTo: whereLevelFieldEqualTo,
-        whereLimitContentPerPageIsEqualTo: whereLimitContentPerPageIsEqualTo,
-        whereLocationIsEqualTo: whereLocationIsEqualTo,
-        whereOrderingAccordingToNameEqualTo:
-            whereOrderingAccordingToNameEqualTo,
-        wherePageNumberIsEqualTo: wherePageNumberIsEqualTo,
-        whereTypeIdIsEqualTo: whereTypeIdIsEqualTo,
-        whereTypeIdsAre: whereTypeIdsAre,
-        whereWorkoutNameContains: whereWorkoutNameContains,
+       queryParameters: {
+        if (whereOrderingAccordingToNameEqualTo != null)
+          "filter[order][name]": whereOrderingAccordingToNameEqualTo,
+        if (whereLimitContentPerPageIsEqualTo != null)
+          "filter[limit]": whereLimitContentPerPageIsEqualTo,
+        if (wherePageNumberIsEqualTo != null)
+          "filter[offset]": wherePageNumberIsEqualTo,
+        if (whereWorkoutNameContains != null)
+          "filter[where][q][contains]": whereWorkoutNameContains,
+        if (whereLevelFieldEqualTo != null)
+          "filter[where][level][eq]": whereLevelFieldEqualTo,
+        if (whereGoalIdsAre != null)
+          "filter[where][goals][in]": whereGoalIdsAre,
+        if (whereGoalIdIsEqualTo != null)
+          "filter[where][goals][eq]": whereGoalIdIsEqualTo,
+        if (whereBodyPartsIdsAre != null)
+          "filter[where][body_parts][in]": whereBodyPartsIdsAre,
+        if (whereBodyPartIdIsEqualTo != null)
+          "filter[where][body_parts][eq]": whereBodyPartIdIsEqualTo,
+        if (whereDurationIsEqualTo != null)
+          "filter[where][duration][eq]": whereDurationIsEqualTo,
+        if (whereTypeIdsAre != null)
+          "filter[where][types][in]": whereTypeIdsAre,
+        if (whereTypeIdIsEqualTo != null)
+          "filter[where][types][eq]": whereTypeIdIsEqualTo,
+        if (whereLocationIsEqualTo != null)
+          "filter[where][location][eq]": whereLocationIsEqualTo,
+      },
       );
       if (response.statusCode == 200) {
         List<WorkoutModel> data = List.from(

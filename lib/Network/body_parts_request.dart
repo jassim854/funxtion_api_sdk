@@ -21,14 +21,20 @@ class BodyPartsRequest {
         maxAge: maxAge ?? const Duration(days: 7),
         forceRefresh: forceRefresh ?? true,
         maxStale: maxStale,
-        whereIdIsEqualTo: whereIdIsEqualTo,
-        whereIdsAre: whereIdsAre,
-        whereLimitContentPerPageIsEqualTo: whereLimitContentPerPageIsEqualTo,
-        whereNameContains: whereNameContains,
-        whereOrderingAccordingToNameEqualTo:
-            whereOrderingAccordingToNameEqualTo,
-        wherePageNumberIsEqualTo: wherePageNumberIsEqualTo,
-        whereSlugNameIsEqualTo: whereSlugNameIsEqualTo,
+      queryParameters:  {
+        if (whereOrderingAccordingToNameEqualTo != null)
+          "filter[order][name]": whereOrderingAccordingToNameEqualTo,
+        if (whereLimitContentPerPageIsEqualTo != null)
+          "filter[limit]": whereLimitContentPerPageIsEqualTo,
+        if (wherePageNumberIsEqualTo != null)
+          "filter[offset]": wherePageNumberIsEqualTo,
+        if (whereIdIsEqualTo != null) "filter[where][id][eq]": whereIdIsEqualTo,
+        if (whereIdsAre != null) "filter[where][id][in]": whereIdsAre,
+        if (whereNameContains != null)
+          "filter[where][name][contains]": whereNameContains,
+        if (whereSlugNameIsEqualTo != null)
+          "filter[where][slug][eq]": whereSlugNameIsEqualTo,
+      },
       );
       if (response.statusCode == 200) {
         List<BodyPartModel> data = List.from(
