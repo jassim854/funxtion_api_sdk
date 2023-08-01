@@ -14,7 +14,8 @@ class AuthRequest {
         return true;
       }
       return false;
-    } on DioError catch (e) {
+    } on DioError catch (e) { 
+      
       throw convertDioErrorToRequestException(e);
     }
   }
