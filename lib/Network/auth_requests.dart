@@ -6,6 +6,7 @@ class AuthRequest {
     NetwoerkHelper netwoerkHelper = NetwoerkHelper();
     try {
       _dioCacheManager = DioCacheManager(CacheConfig());
+      
       netwoerkHelper.dio.interceptors.add(_dioCacheManager?.interceptor);
       var response = await netwoerkHelper.postAuthRequest(username:  username, password: password,maxAge:maxAge??const Duration(hours: 4),forceRefresh: forceRefresh ,maxStale: maxStale);
       if (response.statusCode == 200) {
