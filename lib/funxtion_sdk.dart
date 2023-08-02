@@ -23,10 +23,6 @@ part 'Model/training_plans_model.dart';
 part 'Network/equipment_request.dart';
 part 'Model/equipment_model.dart';
 
-part 'Network/fitness_equipment_category_request.dart';
-
-part 'Model/fitness_equipment_category_model.dart';
-
 part 'Network/fitness_goal_request.dart';
 
 part 'Model/fitness_goal_model.dart';

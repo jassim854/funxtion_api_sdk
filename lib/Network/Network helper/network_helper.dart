@@ -129,32 +129,6 @@ class NetwoerkHelper {
     );
   }
 
-  Future<Response> getListOfFitnessEquipmentCategoriesRequest(
-      {required Duration maxAge,
-      bool? forceRefresh,
-      Duration? maxStale,
-      Map<String, dynamic>? queryParameters}) async {
-    return await dio.get(
-      ConstantApis.listFitnessEquipmentCategoriesApi,
-      queryParameters: queryParameters,
-      options: buildCacheOptions(maxAge,
-          forceRefresh: forceRefresh, maxStale: maxStale),
-    );
-  }
-
-  Future<Response> getFitnessEquipmentCategoryRequest(
-      {required String id,
-      required Duration maxAge,
-      bool? forceRefresh,
-      Duration? maxStale}) async {
-    return await dio.get(
-      ConstantApis.getFitnessEquipmentCategoryApi + id,
-      queryParameters: {},
-      options: buildCacheOptions(maxAge,
-          forceRefresh: forceRefresh, maxStale: maxStale),
-    );
-  }
-
   Future<Response> getListOfFitnessGoalRequest(
       {required Duration maxAge,
       bool? forceRefresh,
@@ -271,18 +245,6 @@ class NetwoerkHelper {
     return await dio.get(
       ConstantApis.listMuscleGroupApi,
       queryParameters: queryParameters,
-      options: buildCacheOptions(maxAge,
-          forceRefresh: forceRefresh, maxStale: maxStale),
-    );
-  }
-
-  Future<Response> getMuscleGroupByIdRequest(
-      {required String id,
-      required Duration maxAge,
-      bool? forceRefresh,
-      Duration? maxStale}) async {
-    return await dio.get(
-      ConstantApis.getMuscleGroupApi + id,
       options: buildCacheOptions(maxAge,
           forceRefresh: forceRefresh, maxStale: maxStale),
     );

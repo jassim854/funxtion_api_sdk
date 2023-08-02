@@ -1,11 +1,11 @@
 part of funxtion_sdk;
 
 class InstructorModel {
-  String id;
+  String? id;
   String? userId;
   String name;
   String gender;
-  Imag photo;
+  Imag? photo;
 
   InstructorModel({
     required this.id,
@@ -21,14 +21,6 @@ class InstructorModel {
         userId: json["user_id"],
         name: json["name"],
         gender: json["gender"],
-        photo: Imag.fromJson(json["photo"]),
+        photo: json["photo"] == null ? null : Imag.fromJson(json["photo"]),
       );
-
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "user_id": userId,
-        "name": name,
-        "gender": gender,
-        "photo": photo.toJson(),
-      };
 }

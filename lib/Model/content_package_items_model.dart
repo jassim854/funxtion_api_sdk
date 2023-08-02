@@ -2,7 +2,7 @@ part of funxtion_sdk;
 
 class ContentPackageItemsModel {
   int total;
-  List<Data> data;
+  List<Datum> data;
 
   ContentPackageItemsModel({
     required this.total,
@@ -12,157 +12,110 @@ class ContentPackageItemsModel {
   factory ContentPackageItemsModel.fromJson(Map<String, dynamic> json) =>
       ContentPackageItemsModel(
         total: json["total"],
-        data: List<Data>.from(json["data"].map((x) => Data.fromJson(x))),
+        data: List<Datum>.from(json["data"].map((x) => Datum.fromJson(x))),
       );
-
-  Map<String, dynamic> toJson() => {
-        "total": total,
-        "data": List<dynamic>.from(data.map((x) => x.toJson())),
-      };
 }
 
-class Data {
-  String id;
+class Datum {
   String type;
+  String id;
   DateTime createdAt;
-  Datas data;
+  Data data;
 
-  Data({
-    required this.id,
+  Datum({
     required this.type,
+    required this.id,
     required this.createdAt,
     required this.data,
   });
 
-  factory Data.fromJson(Map<String, dynamic> json) => Data(
-        id: json["id"],
+  factory Datum.fromJson(Map<String, dynamic> json) => Datum(
         type: json["type"],
+        id: json["id"],
         createdAt: DateTime.parse(json["created_at"]),
-        data: Datas.fromJson(json["data"]),
+        data: Data.fromJson(json["data"]),
       );
-
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "type": type,
-        "created_at": createdAt.toIso8601String(),
-        "data": data.toJson(),
-      };
 }
 
-class Datas {
+class Data {
   String id;
   String title;
-  String slug;
+  String? video;
   String image;
-  String? gender;
+  String? instructorId;
+  String type;
+  String? duration;
   String level;
   List<int> goals;
+  String? slug;
+  String? gender;
   List<int>? types;
-  List<String>? locations;
   List<int>? bodyParts;
-  String duration;
-  String? description;
-  String? type;
-  String? video;
-  String? language;
-  String? instructorId;
-  int? externalId;
-  List<int>? equipment;
-  int? contentProvider;
-  List<int>? contentTypes;
-  List<String>? categories;
+  List<String>? locations;
+  Description? description;
+  int? weeksTotal;
+  int? daysTotal;
+  int? maxDaysPerWeek;
 
-  Datas({
+  Data({
     required this.id,
     required this.title,
-    required this.slug,
+    this.video,
     required this.image,
-    this.gender,
+    this.instructorId,
+    required this.type,
+    this.duration,
     required this.level,
     required this.goals,
+    this.slug,
+    this.gender,
     this.types,
-    this.locations,
     this.bodyParts,
-    required this.duration,
+    this.locations,
     this.description,
-    this.type,
-    this.video,
-    this.language,
-    this.instructorId,
-    this.externalId,
-    this.equipment,
-    this.contentProvider,
-    this.contentTypes,
-    this.categories,
+    this.weeksTotal,
+    this.daysTotal,
+    this.maxDaysPerWeek,
   });
 
-  factory Datas.fromJson(Map<String, dynamic> json) => Datas(
+  factory Data.fromJson(Map<String, dynamic> json) => Data(
         id: json["id"],
         title: json["title"],
-        slug: json["slug"],
+        video: json["video"],
         image: json["image"],
-        gender: json["gender"],
+        instructorId: json["instructor_id"],
+        type: json["type"],
+        duration: json["duration"],
         level: json["level"],
         goals: List<int>.from(json["goals"].map((x) => x)),
+        slug: json["slug"],
+        gender: json["gender"],
         types: json["types"] == null
             ? []
             : List<int>.from(json["types"]!.map((x) => x)),
-        locations: json["locations"] == null
-            ? []
-            : List<String>.from(json["locations"]!.map((x) => x)),
         bodyParts: json["body_parts"] == null
             ? []
             : List<int>.from(json["body_parts"]!.map((x) => x)),
-        duration: json["duration"],
-        description: json["description"],
-        type: json["type"],
-        video: json["video"],
-        language: json["language"],
-        instructorId: json["instructor_id"],
-        externalId: json["external_id"],
-        equipment: json["equipment"] == null
+        locations: json["locations"] == null
             ? []
-            : List<int>.from(json["equipment"]!.map((x) => x)),
-        contentProvider: json["content_provider"],
-        contentTypes: json["content_types"] == null
-            ? []
-            : List<int>.from(json["content_types"]!.map((x) => x)),
-        categories: json["categories"] == null
-            ? []
-            : List<String>.from(json["categories"]!.map((x) => x)),
+            : List<String>.from(json["locations"]!.map((x) => x)),
+        description: json["description"] == null
+            ? null
+            : Description.fromJson(json["description"]),
+        weeksTotal: json["weeks_total"],
+        daysTotal: json["days_total"],
+        maxDaysPerWeek: json["max_days_per_week"],
       );
+}
 
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "title": title,
-        "slug": slug,
-        "image": image,
-        "gender": gender,
-        "level": level,
-        "goals": List<dynamic>.from(goals.map((x) => x)),
-        "types": types == null ? [] : List<dynamic>.from(types!.map((x) => x)),
-        "locations": locations == null
-            ? []
-            : List<dynamic>.from(locations!.map((x) => x)),
-        "body_parts": bodyParts == null
-            ? []
-            : List<dynamic>.from(bodyParts!.map((x) => x)),
-        "duration": duration,
-        "description": description,
-        "type": type,
-        "video": video,
-        "language": language,
-        "instructor_id": instructorId,
-        "external_id": externalId,
-        "equipment": equipment == null
-            ? []
-            : List<dynamic>.from(equipment!.map((x) => x)),
-        "content_provider": contentProvider,
-        "content_types": contentTypes == null
-            ? []
-            : List<dynamic>.from(contentTypes!.map((x) => x)),
-        "categories": categories == null
-            ? []
-            : List<dynamic>.from(categories!.map((x) => x)),
-      };
+class Description {
+  String en;
+
+  Description({
+    required this.en,
+  });
+
+  factory Description.fromJson(Map<String, dynamic> json) => Description(
+        en: json["en"],
+      );
 }
