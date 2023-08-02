@@ -116,7 +116,18 @@ class NetwoerkHelper {
           forceRefresh: forceRefresh, maxStale: maxStale),
     );
   }
-
+  Future<Response> getListOfEquipmentBrandRequest(
+      {required Duration maxAge,
+      bool? forceRefresh,
+      Duration? maxStale,
+      Map<String, dynamic>? queryParameters}) async {
+    return await dio.get(
+      ConstantApis.listEquipmentBrandApi,
+      queryParameters: queryParameters,
+      options: buildCacheOptions(maxAge,
+          forceRefresh: forceRefresh, maxStale: maxStale),
+    );
+  }
   Future<Response> getEquipmentByIdReques(
       {required String id,
       required Duration maxAge,

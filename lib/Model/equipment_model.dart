@@ -5,7 +5,7 @@ class EquipmentModel {
   String name;
   String slug;
   dynamic brandId;
-  List<dynamic> categories;
+  List<dynamic>? categories;
   dynamic description;
   dynamic image;
 
@@ -27,18 +27,11 @@ class EquipmentModel {
                 : null,
         name: json["name"],
         slug: json["slug"],
-        brandId: json["brand_id"],
-        categories: List<int>.from(json["categories"].map((x) => x)),
+        brandId: json.containsKey("brand_id") ? json["brand_id"] : null,
+        categories: json.containsKey("categories")
+            ? List<int>.from(json["categories"].map((x) => x))
+            : null,
         image:
             json["image"] is Map ? Imag.fromJson(json["image"]) : json['image'],
       );
-
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "name": name,
-        "slug": slug,
-        "brand_id": brandId,
-        "categories": List<dynamic>.from(categories.map((x) => x)),
-        "image": image,
-      };
 }

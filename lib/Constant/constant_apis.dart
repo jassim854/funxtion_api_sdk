@@ -1,5 +1,5 @@
 class ConstantApis {
- static const String loginApi =  "auth/token";
+  static const String loginApi = "auth/token";
   static const String listExerciseApi = 'content/fitness/exercises';
   static const String getExerciseApi = 'content/fitness/exercises/';
   static const String listWorkoutApi = 'content/fitness/workouts';
@@ -7,6 +7,8 @@ class ConstantApis {
   static const String listTrainingPlanApi = 'content/fitness/training-plans';
   static const String getTrainingPlanApi = 'content/fitness/training-plans/';
   static const String listEquipmentApi = 'content/fitness/equipment';
+  static const String listEquipmentBrandApi =
+      'content/fitness/equipment/brands';
   static const String getEquipmentApi = 'content/fitness/equipment/';
   static const String listFitnessEquipmentCategoriesApi =
       'content/fitness/equipment/categories';
