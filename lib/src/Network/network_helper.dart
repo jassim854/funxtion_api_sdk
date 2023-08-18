@@ -13,9 +13,9 @@ class NetwoerkHelper {
       headers: {
         "X-Scope": "platform",
         'Content-Type': 'application/json',
-        // "Authorization": AuthRequest.getToken != "null"
-        //     ? "Bearer ${AuthRequest.getToken}"
-        //     : ''
+        "Authorization": AuthRequest.getToken != "null"
+            ? "Bearer ${AuthRequest.getToken}"
+            : ''
       },
     ));
   }
