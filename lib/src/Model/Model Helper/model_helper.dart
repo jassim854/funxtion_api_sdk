@@ -1,11 +1,11 @@
-class Imag {
+class Img {
   String id;
   String name;
   String mime;
   String url;
   DateTime createdAt;
 
-  Imag({
+  Img({
     required this.id,
     required this.name,
     required this.mime,
@@ -13,7 +13,7 @@ class Imag {
     required this.createdAt,
   });
 
-  factory Imag.fromJson(Map<String, dynamic> json) => Imag(
+  factory Img.fromJson(Map<String, dynamic> json) => Img(
         id: json["id"],
         name: json["name"],
         mime: json["mime"],
@@ -59,13 +59,14 @@ class Item {
   String notes;
   List<SeExercise>? seExercises;
   List<CtRound>? ctRounds;
+  List<RftExercise>? rftExercises;
 
-  Item({
-    required this.type,
-    required this.notes,
-    this.seExercises,
-    this.ctRounds,
-  });
+  Item(
+      {required this.type,
+      required this.notes,
+      this.seExercises,
+      this.ctRounds,
+      this.rftExercises});
 
   factory Item.fromJson(Map<String, dynamic> json) => Item(
         type: json["type"],
@@ -78,6 +79,10 @@ class Item {
             ? []
             : List<CtRound>.from(
                 json["ct_rounds"]!.map((x) => CtRound.fromJson(x))),
+        rftExercises: json['rft_exercises'] == null
+            ? []
+            : List<RftExercise>.from(
+                json["rft_exercises"]!.map((x) => RftExercise.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -200,6 +205,29 @@ class Set {
             List<dynamic>.from(resistanceTargets.map((x) => x)),
         "rest": rest,
       };
+}
+
+class RftExercise {
+  String notes;
+  List<GoalTarget> goalTargets;
+  List<dynamic> resistanceTargets;
+  String exerciseId;
+
+  RftExercise({
+    required this.notes,
+    required this.goalTargets,
+    required this.resistanceTargets,
+    required this.exerciseId,
+  });
+
+  factory RftExercise.fromJson(Map<String, dynamic> json) => RftExercise(
+        notes: json["notes"]['en'],
+        goalTargets: List<GoalTarget>.from(
+            json["goal_targets"].map((x) => GoalTarget.fromJson(x))),
+        resistanceTargets:
+            List<dynamic>.from(json["resistance_targets"].map((x) => x)),
+        exerciseId: json["exercise_id"],
+      );
 }
 
 class GoalTarget {

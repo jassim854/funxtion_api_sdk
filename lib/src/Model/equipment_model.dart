@@ -1,4 +1,3 @@
-
 import 'package:funxtion/src/Model/model.dart';
 
 class EquipmentModel {
@@ -33,6 +32,6 @@ class EquipmentModel {
             ? List<int>.from(json["categories"].map((x) => x))
             : null,
         image:
-            json["image"] is Map ? Imag.fromJson(json["image"]) : json['image'],
+            json["image"] is Map ? Img.fromJson(json["image"]) : json['image'],
       );
 }

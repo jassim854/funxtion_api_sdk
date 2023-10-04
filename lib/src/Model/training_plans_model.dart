@@ -2,7 +2,7 @@ import 'Model Helper/model_helper.dart';
 
 class TrainingPlanModel {
   String id;
-  dynamic title;
+  String title;
   dynamic description;
   List<int> goals;
   List<int> types;
@@ -11,7 +11,8 @@ class TrainingPlanModel {
   List<dynamic> contentPackages;
   DateTime createdAt;
   DateTime updatedAt;
-  dynamic image;
+  String? image;
+  Img? mapImage;
   int? weeksTotal;
   int? daysTotal;
   List<Week>? weeks;
@@ -29,7 +30,8 @@ class TrainingPlanModel {
     required this.contentPackages,
     required this.createdAt,
     required this.updatedAt,
-    required this.image,
+    this.image,
+    this.mapImage,
     required this.weeksTotal,
     required this.daysTotal,
     required this.maxDaysPerWeek,
@@ -50,9 +52,8 @@ class TrainingPlanModel {
               List<dynamic>.from(json["content_packages"].map((x) => x)),
           createdAt: DateTime.parse(json["created_at"]),
           updatedAt: DateTime.parse(json["updated_at"]),
-          image: json["image"] is Map
-              ? Imag.fromJson(json["image"])
-              : json['image'],
+          image: json['image'] is Map ? null : json['image'],
+          mapImage: json['image'] is Map ? Img.fromJson(json['image']) : null,
           weeks: json.containsKey("weeks")
               ? List<Week>.from(json["weeks"].map((x) => Week.fromJson(x)))
               : null,

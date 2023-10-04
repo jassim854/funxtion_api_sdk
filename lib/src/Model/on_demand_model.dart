@@ -7,6 +7,8 @@ class OnDemandModel {
   String type;
   dynamic video;
   dynamic image;
+  Img? mapImage;
+  Img? mapVideo;
   String? language;
   String instructorId;
   String level;
@@ -21,6 +23,8 @@ class OnDemandModel {
 
   OnDemandModel({
     required this.id,
+    this.mapImage,
+    this.mapVideo,
     required this.title,
     required this.description,
     required this.type,
@@ -45,10 +49,10 @@ class OnDemandModel {
         description:
             json.containsKey('description') ? json['description']['en'] : null,
         type: json["type"],
-        video:
-            json['video'] is Map ? Imag.fromJson(json["video"]) : json['video'],
-        image:
-            json['image'] is Map ? Imag.fromJson(json["image"]) : json['image'],
+        video: json['video'] is Map ? null : json['video'],
+        image: json['image'] is Map ? null : json['image'],
+        mapVideo: json['video'] is Map ? Img.fromJson(json["video"]) : null,
+        mapImage: json['image'] is Map ? Img.fromJson(json["image"]) : null,
         language: json.containsKey('language') ? json["language"] : null,
         instructorId: json["instructor_id"],
         level: json["level"],

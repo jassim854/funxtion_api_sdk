@@ -10,9 +10,12 @@ class ExerciseModel {
   List<int> muscleGroups;
   List<int> equipment;
   List<int> types;
-  dynamic video;
-  dynamic gif;
-  dynamic image;
+  String? video;
+  Img? mapVideo;
+  String? gif;
+  Img? mapGif;
+  String? image;
+  Img? mapImage;
   List? steps;
   ExerciseModel(
       {required this.id,
@@ -24,9 +27,12 @@ class ExerciseModel {
       required this.muscleGroups,
       required this.equipment,
       required this.types,
-      required this.video,
+      this.video,
+      this.mapVideo,
       required this.gif,
-      required this.image,
+      required this.mapGif,
+      this.image,
+      this.mapImage,
       this.steps});
 
   factory ExerciseModel.fromJson(Map<String, dynamic> json) => ExerciseModel(
@@ -40,11 +46,12 @@ class ExerciseModel {
         muscleGroups: List<int>.from(json["muscle_groups"].map((x) => x)),
         equipment: List<int>.from(json["equipment"].map((x) => x)),
         types: List<int>.from(json["types"].map((x) => x)),
-        video:
-            json["video"] is Map ? Imag.fromJson(json['video']) : json['video'],
-        gif: json["gif"] is Map ? Imag.fromJson(json['gif']) : json['gif'],
-        image:
-            json["image"] is Map ? Imag.fromJson(json['image']) : json['image'],
+        video: json["video"] is Map ? null : json['video'],
+        mapVideo: json["video"] is Map ? Img.fromJson(json['video']) : null,
+        gif: json["gif"] is Map ? null : json['gif'],
+        mapGif: json['gif'] is Map ? Img.fromJson(json['gif']) : null,
+        image: json["image"] is Map ? null : json['image'],
+        mapImage: json["image"] is Map ? Img.fromJson(json['image']) : null,
         steps: json.containsKey('steps')
             ? List.from(json["steps"].map((e) => e['en']))
             : null,

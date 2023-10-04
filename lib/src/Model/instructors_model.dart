@@ -1,5 +1,3 @@
-
-
 import 'Model Helper/model_helper.dart';
 
 class InstructorModel {
@@ -7,7 +5,7 @@ class InstructorModel {
   String? userId;
   String name;
   String gender;
-  Imag? photo;
+  Img? photo;
 
   InstructorModel({
     required this.id,
@@ -23,6 +21,6 @@ class InstructorModel {
         userId: json["user_id"],
         name: json["name"],
         gender: json["gender"],
-        photo: json["photo"] == null ? null : Imag.fromJson(json["photo"]),
+        photo: json["photo"] == null ? null : Img.fromJson(json["photo"]),
       );
 }
