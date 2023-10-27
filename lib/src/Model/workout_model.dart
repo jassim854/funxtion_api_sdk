@@ -41,7 +41,8 @@ class WorkoutModel {
         id: json["id"],
         title: json["title"] is Map ? json['title']['en'] : json['title'],
         slug: json["slug"],
-        description: json.containsKey('des') ? json['des']["en"] : '',
+        description:
+            json.containsKey('description') ? json['description']["en"] : '',
         image: json['image'] is Map ? null : json['image'],
         mapImage: json['image'] is Map ? Img.fromJson(json['image']) : null,
         gender: json["gender"],

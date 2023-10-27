@@ -233,7 +233,7 @@ class RftExercise {
 class GoalTarget {
   String type;
   String metric;
-  dynamic value;
+  double value;
 
   GoalTarget({
     required this.type,

@@ -48,7 +48,7 @@ class ExerciseRequest {
       if (kIsWeb) {
         _addDioCacheInterceptor(html.window.location.pathname ?? "",
             netwoerkHelper, maxStale, forceRefresh, checkInternet);
-        response = await apiCall(
+        response = await _apiCall(
           netwoerkHelper,
           whereContentCategoriesIdIsEqualTo: whereContentCategoriesIdIsEqualTo,
           whereContentCategoryTypesIdsAnd: whereContentCategoryTypesIdsAnd,
@@ -82,7 +82,7 @@ class ExerciseRequest {
           _addDioCacheInterceptor(html.window.location.pathname ?? "",
               netwoerkHelper, maxStale, forceRefresh, checkInternet);
         });
-        response = await apiCall(
+        response = await _apiCall(
           netwoerkHelper,
           whereContentCategoriesIdIsEqualTo: whereContentCategoriesIdIsEqualTo,
           whereContentCategoryTypesIdsAnd: whereContentCategoryTypesIdsAnd,
@@ -125,7 +125,7 @@ class ExerciseRequest {
     return null;
   }
 
-  static Future<Response<dynamic>> apiCall(NetwoerkHelper netwoerkHelper,
+  static Future<Response<dynamic>> _apiCall(NetwoerkHelper netwoerkHelper,
       {String? whereOrderingAccordingToNameEqualTo,
       String? whereLimitContentPerPageIsEqualTo,
       String? wherePageNumberIsEqualTo,
