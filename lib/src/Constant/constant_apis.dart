@@ -23,7 +23,7 @@ class ConstantApis {
   static const String listContentProvidersApi =
       'content/fitness/content-providers';
   static const String listContentCategoryApi = 'content/categories';
-  static const String listOnDemandCategoryApi =
+  static const String   listOnDemandCategoryApi =
       'content/fitness/on-demand-categories';
   static const String listMuscleGroupApi = 'content/fitness/muscle-groups';
   static const String getMuscleGroupApi = 'content/fitness/muscle-groups/';

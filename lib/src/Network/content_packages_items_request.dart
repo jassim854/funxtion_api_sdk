@@ -8,7 +8,7 @@ import 'package:universal_html/html.dart' as html;
 import '../../funxtion_sdk.dart';
 
 class ContentPackageItemRequest {
-  static Future<ContentPackageItemsModel?> listOfContentPackagesItems({
+  static Future<Map<String, dynamic>?> listOfContentPackagesItems({
     required String id,
     bool forceRefresh = true,
     Duration maxStale = const Duration(days: 7),
@@ -41,14 +41,12 @@ class ContentPackageItemRequest {
       }
 
       if (response.statusCode == 200 || response.statusCode == 304) {
-        ContentPackageItemsModel data =
-            ContentPackageItemsModel.fromJson(response.data);
-        return data;
+        return await compute(ResponseConstants.convertResponse, response);
       }
-      return null;
     } on DioError catch (e) {
       throw convertDioErrorToRequestException(e);
     }
+    return null;
   }
 
   static void _addDioCacheInterceptor(

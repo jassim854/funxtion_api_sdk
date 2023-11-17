@@ -8,13 +8,14 @@ import 'package:universal_html/html.dart' as html;
 import '../../funxtion_sdk.dart';
 
 class ContentProviderCategoryOnDemandRequest {
-  static Future<List<ContentProvidersCategoryOnDemandModel>?> contentProviders(
-      {    bool forceRefresh = true,
-    Duration maxStale = const Duration(days: 7),}) async {
+  static Future<List<Map<String, dynamic>>?> contentProviders({
+    bool forceRefresh = true,
+    Duration maxStale = const Duration(days: 7),
+  }) async {
     NetwoerkHelper netwoerkHelper = NetwoerkHelper();
     Response<dynamic> response;
     bool? checkInternet;
-     await Connectivity().checkConnectivity().then((value) {
+    await Connectivity().checkConnectivity().then((value) {
       if (value == ConnectivityResult.none) {
         checkInternet = false;
       } else {
@@ -22,23 +23,20 @@ class ContentProviderCategoryOnDemandRequest {
       }
     });
     try {
-    if (kIsWeb) {
-       _addDioCacheInterceptor(html.window.location.pathname ?? "",
+      if (kIsWeb) {
+        _addDioCacheInterceptor(html.window.location.pathname ?? "",
             netwoerkHelper, maxStale, forceRefresh, checkInternet);
-          response = await netwoerkHelper.getListOfContentProviderRequest();
-    } else {
-         await getTemporaryDirectory().then((value) async {
+        response = await netwoerkHelper.getListOfContentProviderRequest();
+      } else {
+        await getTemporaryDirectory().then((value) async {
           _addDioCacheInterceptor(value.path, netwoerkHelper, maxStale,
               forceRefresh, checkInternet);
         });
-          response = await netwoerkHelper.getListOfContentProviderRequest();
-    }
-   
-      if (response.statusCode == 200|| response.statusCode == 304) {
-        List<ContentProvidersCategoryOnDemandModel> data = List.from(response
-            .data['data']
-            .map((e) => ContentProvidersCategoryOnDemandModel.fromJson(e)));
-        return data;
+        response = await netwoerkHelper.getListOfContentProviderRequest();
+      }
+
+      if (response.statusCode == 200 || response.statusCode == 304) {
+        return await compute(ResponseConstants.convertResponseList, response);
       }
       return null;
     } on DioError catch (e) {
@@ -46,25 +44,34 @@ class ContentProviderCategoryOnDemandRequest {
     }
   }
 
-  static Future<List<ContentProvidersCategoryOnDemandModel>?> contentCategory(
-      {Duration? maxAge, bool? forceRefresh, Duration? maxStale}) async {
+  static Future<List<Map<String, dynamic>>?> contentCategory(
+      {bool forceRefresh = true,
+      Duration maxStale = const Duration(days: 7)}) async {
     NetwoerkHelper netwoerkHelper = NetwoerkHelper();
+    Response<dynamic> response;
+    bool? checkInternet;
+    await Connectivity().checkConnectivity().then((value) {
+      if (value == ConnectivityResult.none) {
+        checkInternet = false;
+      } else {
+        checkInternet = true;
+      }
+    });
     try {
-      netwoerkHelper.dio.interceptors.add(DioCacheInterceptor(
-          options: CacheOptions(
-              store: netwoerkHelper.dioCacheManager,
-              allowPostMethod: true,
-              maxStale: maxStale ?? const Duration(hours: 4),
-              priority: CachePriority.high,
-              policy: forceRefresh == true
-                  ? CachePolicy.forceCache
-                  : CachePolicy.request)));
-      var response = await netwoerkHelper.getListOfContentCategoryRequest();
-      if (response.statusCode == 200) {
-        List<ContentProvidersCategoryOnDemandModel> data = List.from(response
-            .data['data']
-            .map((e) => ContentProvidersCategoryOnDemandModel.fromJson(e)));
-        return data;
+      if (kIsWeb) {
+        _addDioCacheInterceptor(html.window.location.pathname ?? "",
+            netwoerkHelper, maxStale, forceRefresh, checkInternet);
+        response = await netwoerkHelper.getListOfContentCategoryRequest();
+      } else {
+        await getTemporaryDirectory().then((value) async {
+          _addDioCacheInterceptor(value.path, netwoerkHelper, maxStale,
+              forceRefresh, checkInternet);
+        });
+        response = await netwoerkHelper.getListOfContentCategoryRequest();
+      }
+
+      if (response.statusCode == 200 || response.statusCode == 304) {
+           return await compute(ResponseConstants.convertResponseList, response);
       }
       return null;
     } on DioError catch (e) {
@@ -72,7 +79,7 @@ class ContentProviderCategoryOnDemandRequest {
     }
   }
 
-  static Future<List<ContentProvidersCategoryOnDemandModel>?> onDemandCategory({
+  static Future<List<Map<String, dynamic>>?> onDemandCategory({
     bool forceRefresh = true,
     Duration maxStale = const Duration(days: 7),
     String? whereIdIsEqualTo,
@@ -84,9 +91,9 @@ class ContentProviderCategoryOnDemandRequest {
     String? whereSlugNameIsEqualTo,
   }) async {
     NetwoerkHelper netwoerkHelper = NetwoerkHelper();
-        Response<dynamic> response;
+    Response<dynamic> response;
     bool? checkInternet;
-       await Connectivity().checkConnectivity().then((value) {
+    await Connectivity().checkConnectivity().then((value) {
       if (value == ConnectivityResult.none) {
         checkInternet = false;
       } else {
@@ -94,63 +101,32 @@ class ContentProviderCategoryOnDemandRequest {
       }
     });
     try {
-   if (kIsWeb) {
-           _addDioCacheInterceptor(html.window.location.pathname ?? "",
+      if (kIsWeb) {
+        _addDioCacheInterceptor(html.window.location.pathname ?? "",
             netwoerkHelper, maxStale, forceRefresh, checkInternet);
-      response = await netwoerkHelper.getListOnDemandCategoriesRequest(
-        queryParameters: {
-          if (whereOrderingAccordingToNameEqualTo != null)
-            "filter[order][name]": whereOrderingAccordingToNameEqualTo,
-          if (whereLimitContentPerPageIsEqualTo != null)
-            "filter[limit]": whereLimitContentPerPageIsEqualTo,
-          if (wherePageNumberIsEqualTo != null)
-            "filter[offset]": wherePageNumberIsEqualTo,
-          if (whereIdIsEqualTo != null)
-            "filter[where][id][eq]": whereIdIsEqualTo,
-          if (whereIdsAre != null) "filter[where][id][in]": whereIdsAre,
-          if (whereNameIsEqualTo != null)
-            "filter[where][name][eq]": whereNameIsEqualTo,
-          if (whereSlugNameIsEqualTo != null)
-            "filter[where][slug][eq]": whereSlugNameIsEqualTo,
-        },
-      );
-   } else {
-      await getTemporaryDirectory().then((value) async {
+        response = await netwoerkHelper.getListOnDemandCategoriesRequest(
+      
+        );
+      } else {
+        await getTemporaryDirectory().then((value) async {
           _addDioCacheInterceptor(value.path, netwoerkHelper, maxStale,
               forceRefresh, checkInternet);
         });
-      response = await netwoerkHelper.getListOnDemandCategoriesRequest(
-        queryParameters: {
-          if (whereOrderingAccordingToNameEqualTo != null)
-            "filter[order][name]": whereOrderingAccordingToNameEqualTo,
-          if (whereLimitContentPerPageIsEqualTo != null)
-            "filter[limit]": whereLimitContentPerPageIsEqualTo,
-          if (wherePageNumberIsEqualTo != null)
-            "filter[offset]": wherePageNumberIsEqualTo,
-          if (whereIdIsEqualTo != null)
-            "filter[where][id][eq]": whereIdIsEqualTo,
-          if (whereIdsAre != null) "filter[where][id][in]": whereIdsAre,
-          if (whereNameIsEqualTo != null)
-            "filter[where][name][eq]": whereNameIsEqualTo,
-          if (whereSlugNameIsEqualTo != null)
-            "filter[where][slug][eq]": whereSlugNameIsEqualTo,
-        },
-      );
-   }
-      
-      if (response.statusCode == 200|| response.statusCode == 304) {
-        List<ContentProvidersCategoryOnDemandModel> data = List.from(response
-            .data['data']
-            .map((e) => ContentProvidersCategoryOnDemandModel.fromJson(e)));
+        response = await netwoerkHelper.getListOnDemandCategoriesRequest(
+    
+        );
+      }
 
-        return data;
+      if (response.statusCode == 200 || response.statusCode == 304) {
+          return await compute(ResponseConstants.convertResponseList, response);
       }
       return null;
     } on DioError catch (e) {
       throw convertDioErrorToRequestException(e);
     }
   }
-    static void _addDioCacheInterceptor(
+
+  static void _addDioCacheInterceptor(
       String path,
       NetwoerkHelper netwoerkHelper,
       Duration maxStale,

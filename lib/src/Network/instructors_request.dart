@@ -9,8 +9,8 @@ import 'package:universal_html/html.dart' as html;
 import '../../funxtion_sdk.dart';
 
 class InstructorRequest {
-  static Future<List<InstructorModel>?> listOfInstructors(
-      {Duration? maxAge,
+  static Future<List<Map<String,dynamic>>?> listOfInstructors(
+      {
       bool forceRefresh = true,
       Duration maxStale = const Duration(days: 7)}) async {
     NetwoerkHelper netwoerkHelper = NetwoerkHelper();
@@ -37,10 +37,8 @@ class InstructorRequest {
       }
 
       if (response.statusCode == 200|| response.statusCode == 304) {
-        List<InstructorModel> data = List.from(
-            response.data['data'].map((e) => InstructorModel.fromJson(e)));
-
-        return data;
+   return await compute(ResponseConstants.convertResponseList, response);
+     
       }
       return null;
     } on DioError catch (e) {
@@ -48,7 +46,7 @@ class InstructorRequest {
     }
   }
 
-  static Future<InstructorModel?> instructorsById(
+  static Future<Map<String,dynamic>?> instructorsById(
       {required String id,
       bool forceRefresh = true,
       Duration maxStale = const Duration(days: 7)}) async {
@@ -80,9 +78,8 @@ class InstructorRequest {
       }
 
       if (response.statusCode == 200|| response.statusCode == 304) {
-        InstructorModel data = InstructorModel.fromJson(response.data);
-        return data;
-      }
+       return await compute(ResponseConstants.convertResponse, response);
+     }
       return null;
     } on DioError catch (e) {
       throw convertDioErrorToRequestException(e);

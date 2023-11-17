@@ -8,8 +8,8 @@ import 'package:universal_html/html.dart' as html;
 import '../../funxtion_sdk.dart';
 
 class FitnessActivityTypeRequest {
-  static Future<List<FitnessActivityTypeModel>?> listOfFtinessActivitiesType(
-      {Duration? maxAge,
+  static Future<List<Map<String,dynamic>>?> listOfFtinessActivitiesType(
+      {
       bool forceRefresh = true,
       Duration maxStale = const Duration(days: 7)}) async {
     NetwoerkHelper netwoerkHelper = NetwoerkHelper();
@@ -41,10 +41,8 @@ class FitnessActivityTypeRequest {
       }
 
       if (response.statusCode == 200 || response.statusCode == 304) {
-        List<FitnessActivityTypeModel> data = List.from(response.data['data']
-            .map((e) => FitnessActivityTypeModel.fromJson(e)));
-
-        return data;
+     return await compute(ResponseConstants.convertResponseList, response);
+    
       }
       return null;
     } on DioError catch (e) {
@@ -52,7 +50,7 @@ class FitnessActivityTypeRequest {
     }
   }
 
-  static Future<FitnessActivityTypeModel?> ftinessActivityTypeById(
+  static Future<Map<String,dynamic>?> ftinessActivityTypeById(
       {required String id,
       Duration? maxAge,
       bool forceRefresh = true,
@@ -90,10 +88,7 @@ class FitnessActivityTypeRequest {
       }
 
       if (response.statusCode == 200 || response.statusCode == 304) {
-        FitnessActivityTypeModel data =
-            FitnessActivityTypeModel.fromJson(response.data);
-
-        return data;
+        return await compute(ResponseConstants.convertResponse, response);
       }
       return null;
     } on DioError catch (e) {

@@ -76,50 +76,41 @@ class NetwoerkHelper {
     );
   }
 
-  Future<Response> getListOfEquipmentRequest(
-      {Map<String, dynamic>? queryParameters}) async {
+  Future<Response> getListOfEquipmentRequest() async {
     return await dio.get(
       ConstantApis.listEquipmentApi,
-      queryParameters: queryParameters,
     );
   }
 
-  Future<Response> getListOfEquipmentBrandRequest(
-      {
-      Map<String, dynamic>? queryParameters}) async {
+  Future<Response> getListOfEquipmentBrandRequest() async {
     return await dio.get(
       ConstantApis.listEquipmentBrandApi,
-      queryParameters: queryParameters,
     );
   }
 
-  Future<Response> getEquipmentByIdReques(
-      {required String id,
-}) async {
+  Future<Response> getEquipmentByIdReques({
+    required String id,
+  }) async {
     return await dio.get(
       ConstantApis.getEquipmentApi + id,
     );
   }
 
-  Future<Response> getListOfFitnessGoalRequest(
-      {
-      Map<String, dynamic>? queryParameters}) async {
+  Future<Response> getListOfFitnessGoalRequest() async {
     return await dio.get(
       ConstantApis.listFitnessGoalApi,
-      queryParameters: queryParameters,
     );
   }
 
-  Future<Response> getFitnessGoalByIdRequest(
-      {required String id,
-     }) async {
+  Future<Response> getFitnessGoalByIdRequest({
+    required String id,
+  }) async {
     return await dio.get(
       ConstantApis.getFitnessGoalApi + id,
     );
   }
 
-  Future<Response> getListOfInstructorsRequest(
-      ) async {
+  Future<Response> getListOfInstructorsRequest() async {
     return await dio.get(
       ConstantApis.listInstructorApi,
     );
@@ -161,19 +152,15 @@ class NetwoerkHelper {
     );
   }
 
-  Future<Response> getListOnDemandCategoriesRequest(
-      {Map<String, dynamic>? queryParameters}) async {
+  Future<Response> getListOnDemandCategoriesRequest() async {
     return await dio.get(
       ConstantApis.listOnDemandCategoryApi,
-      queryParameters: queryParameters,
     );
   }
 
-  Future<Response> getListOfMuscleGroupRequest(
-      {Map<String, dynamic>? queryParameters}) async {
+  Future<Response> getListOfMuscleGroupRequest() async {
     return await dio.get(
       ConstantApis.listMuscleGroupApi,
-      queryParameters: queryParameters,
     );
   }
 
@@ -191,11 +178,9 @@ class NetwoerkHelper {
     );
   }
 
-  Future<Response> getBodyPartsRequest(
-      {Map<String, dynamic>? queryParameters}) async {
+  Future<Response> getBodyPartsRequest() async {
     return await dio.get(
       ConstantApis.getBodyPartsApi,
-      queryParameters: queryParameters,
     );
   }
 
