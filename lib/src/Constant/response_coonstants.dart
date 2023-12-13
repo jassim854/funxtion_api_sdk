@@ -12,4 +12,10 @@ class ResponseConstants {
         List.from(response.data['data'].map((e) => e));
     return data;
   }
+    static List<Map<String, dynamic>> convertResponseFilterList(
+      Response<dynamic> response) {
+    List<Map<String, dynamic>> data =
+        List.from(response.data.map((e) => e));
+    return data;
+  }
 }

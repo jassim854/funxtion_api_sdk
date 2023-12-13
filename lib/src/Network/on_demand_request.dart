@@ -86,6 +86,43 @@ class OnDemandRequest {
     }
   }
 
+  static Future<List<Map<String, dynamic>>?> onDemandFilter({
+    bool forceRefresh = true,
+    Duration maxStale = const Duration(days: 7),
+  }) async {
+    NetwoerkHelper netwoerkHelper = NetwoerkHelper();
+    Response<dynamic>? response;
+    bool? checkInternet;
+    await Connectivity().checkConnectivity().then((value) {
+      if (value == ConnectivityResult.none) {
+        checkInternet = false;
+      } else {
+        checkInternet = true;
+      }
+    });
+    try {
+      if (kIsWeb) {
+        _addDioCacheInterceptor(html.window.location.pathname ?? "",
+            netwoerkHelper, maxStale, forceRefresh, checkInternet);
+        response = await netwoerkHelper.getOnDemandFilterRequest();
+      } else {
+        await getTemporaryDirectory().then((value) async {
+          _addDioCacheInterceptor(value.path, netwoerkHelper, maxStale,
+              forceRefresh, checkInternet);
+        });
+        response = await netwoerkHelper.getOnDemandFilterRequest();
+      }
+
+      if (response.statusCode == 200 || response.statusCode == 304) {
+        return await compute(
+            ResponseConstants.convertResponseFilterList, response);
+      }
+      return null;
+    } on DioError catch (e) {
+      throw convertDioErrorToRequestException(e);
+    }
+  }
+
   static void _addDioCacheInterceptor(
     String path,
     NetwoerkHelper netwoerkHelper,

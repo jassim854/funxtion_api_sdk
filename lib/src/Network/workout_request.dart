@@ -8,11 +8,11 @@ import 'package:universal_html/html.dart' as html;
 import '../../funxtion_sdk.dart';
 
 class WorkoutRequest {
-  static Future<List<Map<String, dynamic>>?> listOfWorkout(
-      {bool forceRefresh = true,
-      Duration maxStale = const Duration(days: 7),
-      Map<String,dynamic>? queryParameters,
-    }) async {
+  static Future<List<Map<String, dynamic>>?> listOfWorkout({
+    bool forceRefresh = true,
+    Duration maxStale = const Duration(days: 7),
+    Map<String, dynamic>? queryParameters,
+  }) async {
     NetwoerkHelper netwoerkHelper = NetwoerkHelper();
     Response<dynamic> response;
     bool? checkInternet;
@@ -28,8 +28,7 @@ class WorkoutRequest {
         _addDioCacheInterceptor(html.window.location.pathname ?? "",
             netwoerkHelper, maxStale, forceRefresh, checkInternet);
         response = await netwoerkHelper.getListOfWorkoutRequest(
-    queryParameters: queryParameters
-    );
+            queryParameters: queryParameters);
       } else {
         await getTemporaryDirectory().then((value) async {
           _addDioCacheInterceptor(
@@ -41,8 +40,7 @@ class WorkoutRequest {
           );
         });
         response = await netwoerkHelper.getListOfWorkoutRequest(
-    
-    );
+            queryParameters: queryParameters);
       }
 
       if (response.statusCode == 200 || response.statusCode == 304) {
@@ -54,7 +52,6 @@ class WorkoutRequest {
 
     return null;
   }
-
 
   static Future<Map<String, dynamic>?> workoutById(
       {required String id,
@@ -96,6 +93,43 @@ class WorkoutRequest {
     }
 
     return null;
+  }
+
+  static Future<List<Map<String, dynamic>>?> workoutFilters({
+    bool forceRefresh = true,
+    Duration maxStale = const Duration(days: 7),
+  }) async {
+    NetwoerkHelper netwoerkHelper = NetwoerkHelper();
+    Response<dynamic>? response;
+    bool? checkInternet;
+    await Connectivity().checkConnectivity().then((value) {
+      if (value == ConnectivityResult.none) {
+        checkInternet = false;
+      } else {
+        checkInternet = true;
+      }
+    });
+    try {
+      if (kIsWeb) {
+        _addDioCacheInterceptor(html.window.location.pathname ?? "",
+            netwoerkHelper, maxStale, forceRefresh, checkInternet);
+        response = await netwoerkHelper.getWorkoutFilterRequest();
+      } else {
+        await getTemporaryDirectory().then((value) async {
+          _addDioCacheInterceptor(value.path, netwoerkHelper, maxStale,
+              forceRefresh, checkInternet);
+        });
+        response = await netwoerkHelper.getWorkoutFilterRequest();
+      }
+
+      if (response.statusCode == 200 || response.statusCode == 304) {
+        return await compute(
+            ResponseConstants.convertResponseFilterList, response);
+      }
+      return null;
+    } on DioError catch (e) {
+      throw convertDioErrorToRequestException(e);
+    }
   }
 
   static void _addDioCacheInterceptor(

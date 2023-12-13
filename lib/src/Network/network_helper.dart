@@ -61,12 +61,22 @@ class NetwoerkHelper {
     );
   }
 
+  Future<Response> getWorkoutFilterRequest() async {
+    return await dio.get(ConstantApis.getWorkoutFilterApi);
+  }
+
   Future<Response> getListOfTrainingPlanRequest({
     Map<String, dynamic>? queryParameters,
   }) async {
     return await dio.get(
       ConstantApis.listTrainingPlanApi,
       queryParameters: queryParameters,
+    );
+  }
+
+  Future<Response> getTrainingPlanFilterRequest() async {
+    return await dio.get(
+      ConstantApis.getTrainingPlanFilterApi,
     );
   }
 
@@ -129,6 +139,12 @@ class NetwoerkHelper {
     return await dio.get(
       ConstantApis.listOnDemandApi,
       queryParameters: queryParameters,
+    );
+  }
+
+  Future<Response> getOnDemandFilterRequest() async {
+    return await dio.get(
+      ConstantApis.getOnDemandFilterApi,
     );
   }
 

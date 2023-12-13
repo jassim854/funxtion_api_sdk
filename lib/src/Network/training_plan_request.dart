@@ -49,7 +49,6 @@ class TrainingPlanRequest {
 
   static Future<Map<String, dynamic>?> trainingPlanById(
       {required String id,
-    
       bool forceRefresh = true,
       Duration maxStale = const Duration(days: 7)}) async {
     NetwoerkHelper netwoerkHelper = NetwoerkHelper();
@@ -87,6 +86,43 @@ class TrainingPlanRequest {
     }
 
     return null;
+  }
+
+  static Future<List<Map<String, dynamic>>?> trainingPlanFilters({
+    bool forceRefresh = true,
+    Duration maxStale = const Duration(days: 7),
+  }) async {
+    NetwoerkHelper netwoerkHelper = NetwoerkHelper();
+    Response<dynamic>? response;
+    bool? checkInternet;
+    await Connectivity().checkConnectivity().then((value) {
+      if (value == ConnectivityResult.none) {
+        checkInternet = false;
+      } else {
+        checkInternet = true;
+      }
+    });
+    try {
+      if (kIsWeb) {
+        _addDioCacheInterceptor(html.window.location.pathname ?? "",
+            netwoerkHelper, maxStale, forceRefresh, checkInternet);
+        response = await netwoerkHelper.getTrainingPlanFilterRequest();
+      } else {
+        await getTemporaryDirectory().then((value) async {
+          _addDioCacheInterceptor(value.path, netwoerkHelper, maxStale,
+              forceRefresh, checkInternet);
+        });
+        response = await netwoerkHelper.getTrainingPlanFilterRequest();
+      }
+
+      if (response.statusCode == 200 || response.statusCode == 304) {
+        return await compute(
+            ResponseConstants.convertResponseFilterList, response);
+      }
+      return null;
+    } on DioError catch (e) {
+      throw convertDioErrorToRequestException(e);
+    }
   }
 
   static void _addDioCacheInterceptor(
