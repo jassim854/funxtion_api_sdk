@@ -8,7 +8,7 @@ import 'package:universal_html/html.dart' as html;
 import '../../funxtion_sdk.dart';
 
 class FitnessGoalRequest {
-  static Future<List<FitnessGoalModel>?> listOfFitnessGoal({
+  static Future<List<Map<String,dynamic>>?> listOfFitnessGoal({
     bool forceRefresh = true,
     Duration maxStale = const Duration(days: 7),
     String? whereIdIsEqualTo,
@@ -34,21 +34,7 @@ class FitnessGoalRequest {
         _addDioCacheInterceptor(html.window.location.pathname ?? "",
             netwoerkHelper, maxStale, forceRefresh, checkInternet);
         response = await netwoerkHelper.getListOfFitnessGoalRequest(
-          queryParameters: {
-            if (whereOrderingAccordingToNameEqualTo != null)
-              "filter[order][name]": whereOrderingAccordingToNameEqualTo,
-            if (whereLimitContentPerPageIsEqualTo != null)
-              "filter[limit]": whereLimitContentPerPageIsEqualTo,
-            if (wherePageNumberIsEqualTo != null)
-              "filter[offset]": wherePageNumberIsEqualTo,
-            if (whereIdIsEqualTo != null)
-              "filter[where][id][eq]": whereIdIsEqualTo,
-            if (whereIdsAre != null) "filter[where][id][in]": whereIdsAre,
-            if (whereNameContains != null)
-              "filter[where][name][contains]": whereNameContains,
-            if (whereSlugNameIsEqualTo != null)
-              "filter[where][slug][eq]": whereSlugNameIsEqualTo,
-          },
+       
         );
       } else {
         await getTemporaryDirectory().then((value) async {
@@ -56,29 +42,13 @@ class FitnessGoalRequest {
               netwoerkHelper, maxStale, forceRefresh, checkInternet);
         });
         response = await netwoerkHelper.getListOfFitnessGoalRequest(
-          queryParameters: {
-            if (whereOrderingAccordingToNameEqualTo != null)
-              "filter[order][name]": whereOrderingAccordingToNameEqualTo,
-            if (whereLimitContentPerPageIsEqualTo != null)
-              "filter[limit]": whereLimitContentPerPageIsEqualTo,
-            if (wherePageNumberIsEqualTo != null)
-              "filter[offset]": wherePageNumberIsEqualTo,
-            if (whereIdIsEqualTo != null)
-              "filter[where][id][eq]": whereIdIsEqualTo,
-            if (whereIdsAre != null) "filter[where][id][in]": whereIdsAre,
-            if (whereNameContains != null)
-              "filter[where][name][contains]": whereNameContains,
-            if (whereSlugNameIsEqualTo != null)
-              "filter[where][slug][eq]": whereSlugNameIsEqualTo,
-          },
+        
         );
       }
 
       if (response.statusCode == 200 || response.statusCode == 304) {
-        List<FitnessGoalModel> data = List.from(
-            response.data['data'].map((e) => FitnessGoalModel.fromJson(e)));
-
-        return data;
+    return await compute(ResponseConstants.convertResponseList, response);
+   
       }
       return null;
     } on DioError catch (e) {
@@ -86,7 +56,7 @@ class FitnessGoalRequest {
     }
   }
 
-  static Future<FitnessGoalModel?> fitnessGoalById(
+  static Future<Map<String,dynamic>?> fitnessGoalById(
       {required String id,
       bool forceRefresh = true,
       Duration maxStale = const Duration(days: 7)}) async {
@@ -118,8 +88,8 @@ class FitnessGoalRequest {
       }
 
       if (response.statusCode == 200 || response.statusCode == 304) {
-        FitnessGoalModel data = FitnessGoalModel.fromJson(response.data);
-        return data;
+   return await compute(ResponseConstants.convertResponse, response);
+     
       }
       return null;
     } on DioError catch (e) {

@@ -8,7 +8,7 @@ import 'package:universal_html/html.dart' as html;
 import '../../funxtion_sdk.dart';
 
 class MuscleGroupRequest {
-  static Future<List<MuscleGroupsModel>?> listOfMuscleGroup({
+  static Future<List<Map<String,dynamic>>?> listOfMuscleGroup({
     bool forceRefresh = true,
     Duration maxStale = const Duration(days: 7),
 
@@ -35,21 +35,7 @@ class MuscleGroupRequest {
          _addDioCacheInterceptor(html.window.location.pathname ?? "",
             netwoerkHelper, maxStale, forceRefresh, checkInternet);
                  response = await netwoerkHelper.getListOfMuscleGroupRequest(
-        queryParameters: {
-          if (whereOrderingAccordingToNameEqualTo != null)
-            "filter[order][name]": whereOrderingAccordingToNameEqualTo,
-          if (whereLimitContentPerPageIsEqualTo != null)
-            "filter[limit]": whereLimitContentPerPageIsEqualTo,
-          if (wherePageNumberIsEqualTo != null)
-            "filter[offset]": wherePageNumberIsEqualTo,
-          if (whereIdIsEqualTo != null)
-            "filter[where][id][eq]": whereIdIsEqualTo,
-          if (whereIdsAre != null) "filter[where][id][in]": whereIdsAre,
-          if (whereNameContains != null)
-            "filter[where][name][contains]": whereNameContains,
-          if (whereSlugNameIsEqualTo != null)
-            "filter[where][slug][eq]": whereSlugNameIsEqualTo,
-        },
+ 
       );
     } else {
         await getTemporaryDirectory().then((value) async {
@@ -57,29 +43,12 @@ class MuscleGroupRequest {
               forceRefresh, checkInternet);
         });
            response = await netwoerkHelper.getListOfMuscleGroupRequest(
-        queryParameters: {
-          if (whereOrderingAccordingToNameEqualTo != null)
-            "filter[order][name]": whereOrderingAccordingToNameEqualTo,
-          if (whereLimitContentPerPageIsEqualTo != null)
-            "filter[limit]": whereLimitContentPerPageIsEqualTo,
-          if (wherePageNumberIsEqualTo != null)
-            "filter[offset]": wherePageNumberIsEqualTo,
-          if (whereIdIsEqualTo != null)
-            "filter[where][id][eq]": whereIdIsEqualTo,
-          if (whereIdsAre != null) "filter[where][id][in]": whereIdsAre,
-          if (whereNameContains != null)
-            "filter[where][name][contains]": whereNameContains,
-          if (whereSlugNameIsEqualTo != null)
-            "filter[where][slug][eq]": whereSlugNameIsEqualTo,
-        },
-      );
+    );
     }
   
       if (response.statusCode == 200|| response.statusCode == 304) {
-        List<MuscleGroupsModel> data = List.from(
-            response.data['data'].map((e) => MuscleGroupsModel.fromJson(e)));
-
-        return data;
+      return await compute(ResponseConstants.convertResponseList, response);
+     
       }
       return null;
     } on DioError catch (e) {

@@ -8,7 +8,7 @@ import 'package:universal_html/html.dart' as html;
 import '../../funxtion_sdk.dart';
 
 class ContentPackageRequest {
-  static Future<List<ContentPackageModel>?> listOfContentPackages({
+  static Future<List<Map<String, dynamic>>?> listOfContentPackages({
     bool forceRefresh = true,
     Duration maxStale = const Duration(days: 7),
   }) async {
@@ -36,9 +36,7 @@ class ContentPackageRequest {
       }
 
       if (response.statusCode == 200 || response.statusCode == 304) {
-        List<ContentPackageModel> m = List.from(
-            response.data['data'].map((e) => ContentPackageModel.fromJson(e)));
-        return m;
+        return await compute(ResponseConstants.convertResponseList, response);
       }
       return null;
     } on DioError catch (e) {
@@ -46,7 +44,7 @@ class ContentPackageRequest {
     }
   }
 
-  static Future<ContentPackageModel?> contentPackagetById({
+  static Future<Map<String, dynamic>?> contentPackagetById({
     required String id,
     bool forceRefresh = true,
     Duration maxStale = const Duration(days: 7),
@@ -77,13 +75,12 @@ class ContentPackageRequest {
       }
 
       if (response.statusCode == 200 || response.statusCode == 304) {
-        ContentPackageModel data = ContentPackageModel.fromJson(response.data);
-        return data;
+        return await compute(ResponseConstants.convertResponse, response);
       }
-      return null;
     } on DioError catch (e) {
       throw convertDioErrorToRequestException(e);
     }
+    return null;
   }
 
   static void _addDioCacheInterceptor(
