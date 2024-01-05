@@ -4,10 +4,11 @@ class ConstantApis {
   static const String getExerciseApi = 'content/fitness/exercises/';
   static const String listWorkoutApi = 'content/fitness/workouts';
   static const String getWorkoutApi = 'content/fitness/workouts/';
-    static const String getWorkoutFilterApi = 'content/fitness/workouts/filters';
+  static const String getWorkoutFilterApi = 'content/fitness/workouts/filters';
   static const String listTrainingPlanApi = 'content/fitness/training-plans';
   static const String getTrainingPlanApi = 'content/fitness/training-plans/';
-    static const String getTrainingPlanFilterApi = 'content/fitness/training-plans/filters';
+  static const String getTrainingPlanFilterApi =
+      'content/fitness/training-plans/filters';
   static const String listEquipmentApi = 'content/fitness/equipment';
   static const String listEquipmentBrandApi =
       'content/fitness/equipment/brands';

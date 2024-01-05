@@ -162,10 +162,10 @@ class NetwoerkHelper {
     );
   }
 
-  Future<Response> getListOfContentCategoryRequest() async {
-    return await dio.get(
-      ConstantApis.listContentCategoryApi,
-    );
+  Future<Response> getListOfContentCategoryRequest(
+      {Map<String, dynamic>? queryParameters}) async {
+    return await dio.get(ConstantApis.listContentCategoryApi,
+        queryParameters: queryParameters);
   }
 
   Future<Response> getListOnDemandCategoriesRequest() async {

@@ -46,7 +46,8 @@ class ContentProviderCategoryOnDemandRequest {
 
   static Future<List<Map<String, dynamic>>?> contentCategory(
       {bool forceRefresh = true,
-      Duration maxStale = const Duration(days: 7)}) async {
+      Duration maxStale = const Duration(days: 7),
+      Map<String, dynamic>? queryParameters}) async {
     NetwoerkHelper netwoerkHelper = NetwoerkHelper();
     Response<dynamic> response;
     bool? checkInternet;
@@ -61,17 +62,19 @@ class ContentProviderCategoryOnDemandRequest {
       if (kIsWeb) {
         _addDioCacheInterceptor(html.window.location.pathname ?? "",
             netwoerkHelper, maxStale, forceRefresh, checkInternet);
-        response = await netwoerkHelper.getListOfContentCategoryRequest();
+        response = await netwoerkHelper.getListOfContentCategoryRequest(
+            queryParameters: queryParameters);
       } else {
         await getTemporaryDirectory().then((value) async {
           _addDioCacheInterceptor(value.path, netwoerkHelper, maxStale,
               forceRefresh, checkInternet);
         });
-        response = await netwoerkHelper.getListOfContentCategoryRequest();
+        response = await netwoerkHelper.getListOfContentCategoryRequest(
+            queryParameters: queryParameters);
       }
 
       if (response.statusCode == 200 || response.statusCode == 304) {
-           return await compute(ResponseConstants.convertResponseList, response);
+        return await compute(ResponseConstants.convertResponseList, response);
       }
       return null;
     } on DioError catch (e) {
@@ -82,13 +85,6 @@ class ContentProviderCategoryOnDemandRequest {
   static Future<List<Map<String, dynamic>>?> onDemandCategory({
     bool forceRefresh = true,
     Duration maxStale = const Duration(days: 7),
-    String? whereIdIsEqualTo,
-    String? whereIdsAre,
-    String? whereLimitContentPerPageIsEqualTo,
-    String? whereNameIsEqualTo,
-    String? whereOrderingAccordingToNameEqualTo,
-    String? wherePageNumberIsEqualTo,
-    String? whereSlugNameIsEqualTo,
   }) async {
     NetwoerkHelper netwoerkHelper = NetwoerkHelper();
     Response<dynamic> response;
@@ -104,21 +100,17 @@ class ContentProviderCategoryOnDemandRequest {
       if (kIsWeb) {
         _addDioCacheInterceptor(html.window.location.pathname ?? "",
             netwoerkHelper, maxStale, forceRefresh, checkInternet);
-        response = await netwoerkHelper.getListOnDemandCategoriesRequest(
-      
-        );
+        response = await netwoerkHelper.getListOnDemandCategoriesRequest();
       } else {
         await getTemporaryDirectory().then((value) async {
           _addDioCacheInterceptor(value.path, netwoerkHelper, maxStale,
               forceRefresh, checkInternet);
         });
-        response = await netwoerkHelper.getListOnDemandCategoriesRequest(
-    
-        );
+        response = await netwoerkHelper.getListOnDemandCategoriesRequest();
       }
 
       if (response.statusCode == 200 || response.statusCode == 304) {
-          return await compute(ResponseConstants.convertResponseList, response);
+        return await compute(ResponseConstants.convertResponseList, response);
       }
       return null;
     } on DioError catch (e) {
