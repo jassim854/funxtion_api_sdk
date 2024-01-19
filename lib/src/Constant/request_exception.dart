@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 
-class RequestException implements Exception {
+class RequestException {
   dynamic error;
   String message;
   RequestOptions requestOptions;

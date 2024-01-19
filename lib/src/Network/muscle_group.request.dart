@@ -8,7 +8,7 @@ import 'package:universal_html/html.dart' as html;
 import '../../funxtion_sdk.dart';
 
 class MuscleGroupRequest {
-  static Future<List<MuscleGroupsModel>?> listOfMuscleGroup({
+  static Future<List<Map<String,dynamic>>?> listOfMuscleGroup({
     bool forceRefresh = true,
     Duration maxStale = const Duration(days: 7),
 
@@ -20,7 +20,7 @@ class MuscleGroupRequest {
     String? wherePageNumberIsEqualTo,
     String? whereSlugNameIsEqualTo,
   }) async {
-    NetwoerkHelper netwoerkHelper = NetwoerkHelper();
+    NetworkHelper networkHelper = NetworkHelper();
         Response<dynamic> response;
     bool? checkInternet;
      await Connectivity().checkConnectivity().then((value) {
@@ -33,53 +33,22 @@ class MuscleGroupRequest {
     try {
     if (kIsWeb) {
          _addDioCacheInterceptor(html.window.location.pathname ?? "",
-            netwoerkHelper, maxStale, forceRefresh, checkInternet);
-                 response = await netwoerkHelper.getListOfMuscleGroupRequest(
-        queryParameters: {
-          if (whereOrderingAccordingToNameEqualTo != null)
-            "filter[order][name]": whereOrderingAccordingToNameEqualTo,
-          if (whereLimitContentPerPageIsEqualTo != null)
-            "filter[limit]": whereLimitContentPerPageIsEqualTo,
-          if (wherePageNumberIsEqualTo != null)
-            "filter[offset]": wherePageNumberIsEqualTo,
-          if (whereIdIsEqualTo != null)
-            "filter[where][id][eq]": whereIdIsEqualTo,
-          if (whereIdsAre != null) "filter[where][id][in]": whereIdsAre,
-          if (whereNameContains != null)
-            "filter[where][name][contains]": whereNameContains,
-          if (whereSlugNameIsEqualTo != null)
-            "filter[where][slug][eq]": whereSlugNameIsEqualTo,
-        },
+            networkHelper, maxStale, forceRefresh, checkInternet);
+                 response = await networkHelper.getListOfMuscleGroupRequest(
+ 
       );
     } else {
         await getTemporaryDirectory().then((value) async {
-          _addDioCacheInterceptor(value.path, netwoerkHelper, maxStale,
+          _addDioCacheInterceptor(value.path, networkHelper, maxStale,
               forceRefresh, checkInternet);
         });
-           response = await netwoerkHelper.getListOfMuscleGroupRequest(
-        queryParameters: {
-          if (whereOrderingAccordingToNameEqualTo != null)
-            "filter[order][name]": whereOrderingAccordingToNameEqualTo,
-          if (whereLimitContentPerPageIsEqualTo != null)
-            "filter[limit]": whereLimitContentPerPageIsEqualTo,
-          if (wherePageNumberIsEqualTo != null)
-            "filter[offset]": wherePageNumberIsEqualTo,
-          if (whereIdIsEqualTo != null)
-            "filter[where][id][eq]": whereIdIsEqualTo,
-          if (whereIdsAre != null) "filter[where][id][in]": whereIdsAre,
-          if (whereNameContains != null)
-            "filter[where][name][contains]": whereNameContains,
-          if (whereSlugNameIsEqualTo != null)
-            "filter[where][slug][eq]": whereSlugNameIsEqualTo,
-        },
-      );
+           response = await networkHelper.getListOfMuscleGroupRequest(
+    );
     }
   
       if (response.statusCode == 200|| response.statusCode == 304) {
-        List<MuscleGroupsModel> data = List.from(
-            response.data['data'].map((e) => MuscleGroupsModel.fromJson(e)));
-
-        return data;
+      return await compute(ResponseConstants.convertResponseList, response);
+     
       }
       return null;
     } on DioError catch (e) {
@@ -88,11 +57,11 @@ class MuscleGroupRequest {
   }
     static void _addDioCacheInterceptor(
       String path,
-      NetwoerkHelper netwoerkHelper,
+      NetworkHelper networkHelper,
       Duration maxStale,
       bool forceRefresh,
       bool? checkInternet) {
-    netwoerkHelper.dio.interceptors.add(DioCacheInterceptor(
+    networkHelper.dio.interceptors.add(DioCacheInterceptor(
         options: CacheOptions(
             store: HiveCacheStore(path),
             maxStale: maxStale,

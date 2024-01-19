@@ -9,11 +9,11 @@ import 'package:universal_html/html.dart' as html;
 import '../../funxtion_sdk.dart';
 
 class InstructorRequest {
-  static Future<List<InstructorModel>?> listOfInstructors(
-      {Duration? maxAge,
+  static Future<List<Map<String,dynamic>>?> listOfInstructors(
+      {
       bool forceRefresh = true,
       Duration maxStale = const Duration(days: 7)}) async {
-    NetwoerkHelper netwoerkHelper = NetwoerkHelper();
+    NetworkHelper networkHelper = NetworkHelper();
     Response<dynamic> response;
     bool? checkInternet;
     await Connectivity().checkConnectivity().then((value) {
@@ -26,21 +26,19 @@ class InstructorRequest {
     try {
       if (kIsWeb) {
         _addDioCacheInterceptor(html.window.location.pathname ?? "",
-            netwoerkHelper, maxStale, forceRefresh, checkInternet);
-        response = await netwoerkHelper.getListOfInstructorsRequest();
+            networkHelper, maxStale, forceRefresh, checkInternet);
+        response = await networkHelper.getListOfInstructorsRequest();
       } else {
         await getTemporaryDirectory().then((value) async {
-          _addDioCacheInterceptor(value.path, netwoerkHelper, maxStale,
+          _addDioCacheInterceptor(value.path, networkHelper, maxStale,
               forceRefresh, checkInternet);
         });
-        response = await netwoerkHelper.getListOfInstructorsRequest();
+        response = await networkHelper.getListOfInstructorsRequest();
       }
 
       if (response.statusCode == 200|| response.statusCode == 304) {
-        List<InstructorModel> data = List.from(
-            response.data['data'].map((e) => InstructorModel.fromJson(e)));
-
-        return data;
+   return await compute(ResponseConstants.convertResponseList, response);
+     
       }
       return null;
     } on DioError catch (e) {
@@ -48,11 +46,11 @@ class InstructorRequest {
     }
   }
 
-  static Future<InstructorModel?> instructorsById(
+  static Future<Map<String,dynamic>?> instructorsById(
       {required String id,
       bool forceRefresh = true,
       Duration maxStale = const Duration(days: 7)}) async {
-    NetwoerkHelper netwoerkHelper = NetwoerkHelper();
+    NetworkHelper networkHelper = NetworkHelper();
     Response<dynamic> response;
     bool? checkInternet;
     await Connectivity().checkConnectivity().then((value) {
@@ -65,24 +63,23 @@ class InstructorRequest {
     try {
       if (kIsWeb) {
         _addDioCacheInterceptor(html.window.location.pathname ?? "",
-            netwoerkHelper, maxStale, forceRefresh, checkInternet);
-        response = await netwoerkHelper.getInstructorByIdRequest(
+            networkHelper, maxStale, forceRefresh, checkInternet);
+        response = await networkHelper.getInstructorByIdRequest(
           id: id,
         );
       } else {
         await getTemporaryDirectory().then((value) async {
-          _addDioCacheInterceptor(value.path, netwoerkHelper, maxStale,
+          _addDioCacheInterceptor(value.path, networkHelper, maxStale,
               forceRefresh, checkInternet);
         });
-        response = await netwoerkHelper.getInstructorByIdRequest(
+        response = await networkHelper.getInstructorByIdRequest(
           id: id,
         );
       }
 
       if (response.statusCode == 200|| response.statusCode == 304) {
-        InstructorModel data = InstructorModel.fromJson(response.data);
-        return data;
-      }
+       return await compute(ResponseConstants.convertResponse, response);
+     }
       return null;
     } on DioError catch (e) {
       throw convertDioErrorToRequestException(e);
@@ -91,11 +88,11 @@ class InstructorRequest {
 
   static void _addDioCacheInterceptor(
       String path,
-      NetwoerkHelper netwoerkHelper,
+      NetworkHelper networkHelper,
       Duration maxStale,
       bool forceRefresh,
       bool? checkInternet) {
-    netwoerkHelper.dio.interceptors.add(DioCacheInterceptor(
+    networkHelper.dio.interceptors.add(DioCacheInterceptor(
         options: CacheOptions(
             store: HiveCacheStore(path),
             allowPostMethod: true,

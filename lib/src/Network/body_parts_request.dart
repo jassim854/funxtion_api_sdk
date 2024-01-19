@@ -8,7 +8,7 @@ import 'package:universal_html/html.dart' as html;
 import '../../funxtion_sdk.dart';
 
 class BodyPartsRequest {
-  static Future<List<BodyPartModel>?> bodyParts({
+  static Future<List<Map<String, dynamic>>?> bodyParts({
     bool forceRefresh = true,
     Duration maxStale = const Duration(days: 7),
     String? whereIdIsEqualTo,
@@ -19,7 +19,7 @@ class BodyPartsRequest {
     String? wherePageNumberIsEqualTo,
     String? whereSlugNameIsEqualTo,
   }) async {
-    NetwoerkHelper netwoerkHelper = NetwoerkHelper();
+    NetworkHelper networkHelper = NetworkHelper();
     Response<dynamic> response;
     bool? checkInternet;
     await Connectivity().checkConnectivity().then((value) {
@@ -32,53 +32,18 @@ class BodyPartsRequest {
     try {
       if (kIsWeb) {
         _addDioCacheInterceptor(html.window.location.pathname ?? "",
-            netwoerkHelper, maxStale, forceRefresh, checkInternet);
-        response = await netwoerkHelper.getBodyPartsRequest(
-          queryParameters: {
-            if (whereOrderingAccordingToNameEqualTo != null)
-              "filter[order][name]": whereOrderingAccordingToNameEqualTo,
-            if (whereLimitContentPerPageIsEqualTo != null)
-              "filter[limit]": whereLimitContentPerPageIsEqualTo,
-            if (wherePageNumberIsEqualTo != null)
-              "filter[offset]": wherePageNumberIsEqualTo,
-            if (whereIdIsEqualTo != null)
-              "filter[where][id][eq]": whereIdIsEqualTo,
-            if (whereIdsAre != null) "filter[where][id][in]": whereIdsAre,
-            if (whereNameContains != null)
-              "filter[where][name][contains]": whereNameContains,
-            if (whereSlugNameIsEqualTo != null)
-              "filter[where][slug][eq]": whereSlugNameIsEqualTo,
-          },
-        );
+            networkHelper, maxStale, forceRefresh, checkInternet);
+        response = await networkHelper.getBodyPartsRequest();
       } else {
         await getTemporaryDirectory().then((value) async {
-          _addDioCacheInterceptor(value.path, netwoerkHelper, maxStale,
+          _addDioCacheInterceptor(value.path, networkHelper, maxStale,
               forceRefresh, checkInternet);
         });
-        response = await netwoerkHelper.getBodyPartsRequest(
-          queryParameters: {
-            if (whereOrderingAccordingToNameEqualTo != null)
-              "filter[order][name]": whereOrderingAccordingToNameEqualTo,
-            if (whereLimitContentPerPageIsEqualTo != null)
-              "filter[limit]": whereLimitContentPerPageIsEqualTo,
-            if (wherePageNumberIsEqualTo != null)
-              "filter[offset]": wherePageNumberIsEqualTo,
-            if (whereIdIsEqualTo != null)
-              "filter[where][id][eq]": whereIdIsEqualTo,
-            if (whereIdsAre != null) "filter[where][id][in]": whereIdsAre,
-            if (whereNameContains != null)
-              "filter[where][name][contains]": whereNameContains,
-            if (whereSlugNameIsEqualTo != null)
-              "filter[where][slug][eq]": whereSlugNameIsEqualTo,
-          },
-        );
+        response = await networkHelper.getBodyPartsRequest();
       }
 
       if (response.statusCode == 200 || response.statusCode == 304) {
-        List<BodyPartModel> data = List.from(
-            response.data['data'].map((e) => BodyPartModel.fromJson(e)));
-
-        return data;
+        return await compute(ResponseConstants.convertResponseList, response);
       }
       return null;
     } on DioError catch (e) {
@@ -86,11 +51,11 @@ class BodyPartsRequest {
     }
   }
 
-  static Future<BodyPartModel?> bodyPartById(
+  static Future<Map<String, dynamic>?> bodyPartById(
       {required String id,
       bool forceRefresh = true,
       Duration maxStale = const Duration(days: 7)}) async {
-    NetwoerkHelper netwoerkHelper = NetwoerkHelper();
+    NetworkHelper networkHelper = NetworkHelper();
     Response<dynamic> response;
     bool? checkInternet;
     await Connectivity().checkConnectivity().then((value) {
@@ -103,23 +68,22 @@ class BodyPartsRequest {
     try {
       if (kIsWeb) {
         _addDioCacheInterceptor(html.window.location.pathname ?? "",
-            netwoerkHelper, maxStale, forceRefresh, checkInternet);
-        response = await netwoerkHelper.getABodyPartById(
+            networkHelper, maxStale, forceRefresh, checkInternet);
+        response = await networkHelper.getABodyPartById(
           id: id,
         );
       } else {
         await getTemporaryDirectory().then((value) async {
-          _addDioCacheInterceptor(value.path, netwoerkHelper, maxStale,
+          _addDioCacheInterceptor(value.path, networkHelper, maxStale,
               forceRefresh, checkInternet);
         });
-        response = await netwoerkHelper.getABodyPartById(
+        response = await networkHelper.getABodyPartById(
           id: id,
         );
       }
 
       if (response.statusCode == 200 || response.statusCode == 304) {
-        BodyPartModel data = BodyPartModel.fromJson(response.data);
-        return data;
+        return await compute(ResponseConstants.convertResponse, response);
       }
       return null;
     } on DioError catch (e) {
@@ -129,11 +93,11 @@ class BodyPartsRequest {
 
   static void _addDioCacheInterceptor(
       String path,
-      NetwoerkHelper netwoerkHelper,
+      NetworkHelper networkHelper,
       Duration maxStale,
       bool forceRefresh,
       bool? checkInternet) {
-    netwoerkHelper.dio.interceptors.add(DioCacheInterceptor(
+    networkHelper.dio.interceptors.add(DioCacheInterceptor(
         options: CacheOptions(
             store: HiveCacheStore(path),
             maxStale: maxStale,

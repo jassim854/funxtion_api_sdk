@@ -8,7 +8,7 @@ import 'package:universal_html/html.dart' as html;
 import '../../funxtion_sdk.dart';
 
 class EquipmentRequest {
-  static Future<List<EquipmentModel>?> listOfEquipment({
+  static Future<List<Map<String,dynamic>>?> listOfEquipment({
     bool forceRefresh = true,
     Duration maxStale = const Duration(days: 7),
     String? whereIdIsEqualTo,
@@ -19,7 +19,7 @@ class EquipmentRequest {
     String? wherePageNumberIsEqualTo,
     String? whereSlugNameIsEqualTo,
   }) async {
-    NetwoerkHelper netwoerkHelper = NetwoerkHelper();
+    NetworkHelper networkHelper = NetworkHelper();
     Response<dynamic> response;
     bool? checkInternet;
     await Connectivity().checkConnectivity().then((value) {
@@ -32,57 +32,27 @@ class EquipmentRequest {
     try {
       if (kIsWeb) {
         _addDioCacheInterceptor(html.window.location.pathname ?? "",
-            netwoerkHelper, maxStale, forceRefresh, checkInternet);
-        response = await netwoerkHelper.getListOfEquipmentRequest(
-          queryParameters: {
-            if (whereOrderingAccordingToNameEqualTo != null)
-              "filter[order][name]": whereOrderingAccordingToNameEqualTo,
-            if (whereLimitContentPerPageIsEqualTo != null)
-              "filter[limit]": whereLimitContentPerPageIsEqualTo,
-            if (wherePageNumberIsEqualTo != null)
-              "filter[offset]": wherePageNumberIsEqualTo,
-            if (whereIdIsEqualTo != null)
-              "filter[where][id][eq]": whereIdIsEqualTo,
-            if (whereIdsAre != null) "filter[where][id][in]": whereIdsAre,
-            if (whereNameContains != null)
-              "filter[where][name][contains]": whereNameContains,
-            if (whereSlugNameIsEqualTo != null)
-              "filter[where][slug][eq]": whereSlugNameIsEqualTo,
-          },
+            networkHelper, maxStale, forceRefresh, checkInternet);
+        response = await networkHelper.getListOfEquipmentRequest(
+
         );
       } else {
         await getTemporaryDirectory().then((value) async {
           _addDioCacheInterceptor(
             value.path,
-            netwoerkHelper,
+            networkHelper,
             maxStale,
             forceRefresh,
             checkInternet,
           );
         });
-        response = await netwoerkHelper.getListOfEquipmentRequest(
-          queryParameters: {
-            if (whereOrderingAccordingToNameEqualTo != null)
-              "filter[order][name]": whereOrderingAccordingToNameEqualTo,
-            if (whereLimitContentPerPageIsEqualTo != null)
-              "filter[limit]": whereLimitContentPerPageIsEqualTo,
-            if (wherePageNumberIsEqualTo != null)
-              "filter[offset]": wherePageNumberIsEqualTo,
-            if (whereIdIsEqualTo != null)
-              "filter[where][id][eq]": whereIdIsEqualTo,
-            if (whereIdsAre != null) "filter[where][id][in]": whereIdsAre,
-            if (whereNameContains != null)
-              "filter[where][name][contains]": whereNameContains,
-            if (whereSlugNameIsEqualTo != null)
-              "filter[where][slug][eq]": whereSlugNameIsEqualTo,
-          },
+        response = await networkHelper.getListOfEquipmentRequest(
+ 
         );
       }
 
       if (response.statusCode == 200 || response.statusCode == 304) {
-        List<EquipmentModel> data = List.from(
-            response.data['data'].map((e) => EquipmentModel.fromJson(e)));
-        return data;
+        return await compute(ResponseConstants.convertResponseList, response);
       }
     } on DioError catch (e) {
       throw convertDioErrorToRequestException(e);
@@ -91,11 +61,11 @@ class EquipmentRequest {
     return null;
   }
 
-  static Future<EquipmentModel?> equipmentById(
+  static Future<Map<String,dynamic>?> equipmentById(
       {required String id,
       bool forceRefresh = true,
       Duration maxStale = const Duration(days: 7)}) async {
-    NetwoerkHelper netwoerkHelper = NetwoerkHelper();
+    NetworkHelper networkHelper = NetworkHelper();
     Response<dynamic> response;
     bool? checkInternet;
     await Connectivity().checkConnectivity().then((value) {
@@ -108,28 +78,28 @@ class EquipmentRequest {
     try {
       if (kIsWeb) {
         _addDioCacheInterceptor(html.window.location.pathname ?? "",
-            netwoerkHelper, maxStale, forceRefresh, checkInternet);
-        response = await netwoerkHelper.getEquipmentByIdReques(
+            networkHelper, maxStale, forceRefresh, checkInternet);
+        response = await networkHelper.getEquipmentByIdReques(
           id: id,
         );
       } else {
         await getTemporaryDirectory().then((value) async {
           _addDioCacheInterceptor(
             value.path,
-            netwoerkHelper,
+            networkHelper,
             maxStale,
             forceRefresh,
             checkInternet,
           );
         });
-        response = await netwoerkHelper.getEquipmentByIdReques(
+        response = await networkHelper.getEquipmentByIdReques(
           id: id,
         );
       }
 
       if (response.statusCode == 200|| response.statusCode == 304) {
-        EquipmentModel data = EquipmentModel.fromJson(response.data);
-        return data;
+     return await compute(ResponseConstants.convertResponse, response);
+   
       }
     } on DioError catch (e) {
       throw convertDioErrorToRequestException(e);
@@ -138,7 +108,7 @@ class EquipmentRequest {
     return null;
   }
 
-  static Future<List<EquipmentModel>?> listOfEquipmentBrands({
+  static Future<List<Map<String,dynamic>>?> listOfEquipmentBrands({
     bool forceRefresh = true,
     Duration maxStale = const Duration(days: 7),
     String? whereIdIsEqualTo,
@@ -149,7 +119,7 @@ class EquipmentRequest {
     String? wherePageNumberIsEqualTo,
     String? whereSlugNameIsEqualTo,
   }) async {
-    NetwoerkHelper netwoerkHelper = NetwoerkHelper();
+    NetworkHelper networkHelper = NetworkHelper();
     Response<dynamic> response;
     bool? checkInternet;
     await Connectivity().checkConnectivity().then((value) {
@@ -162,57 +132,28 @@ class EquipmentRequest {
     try {
       if (kIsWeb) {
         _addDioCacheInterceptor(html.window.location.pathname ?? "",
-            netwoerkHelper, maxStale, forceRefresh, checkInternet);
-        response = await netwoerkHelper.getListOfEquipmentBrandRequest(
-          queryParameters: {
-            if (whereOrderingAccordingToNameEqualTo != null)
-              "filter[order][name]": whereOrderingAccordingToNameEqualTo,
-            if (whereLimitContentPerPageIsEqualTo != null)
-              "filter[limit]": whereLimitContentPerPageIsEqualTo,
-            if (wherePageNumberIsEqualTo != null)
-              "filter[offset]": wherePageNumberIsEqualTo,
-            if (whereIdIsEqualTo != null)
-              "filter[where][id][eq]": whereIdIsEqualTo,
-            if (whereIdsAre != null) "filter[where][id][in]": whereIdsAre,
-            if (whereNameContains != null)
-              "filter[where][name][contains]": whereNameContains,
-            if (whereSlugNameIsEqualTo != null)
-              "filter[where][slug][eq]": whereSlugNameIsEqualTo,
-          },
+            networkHelper, maxStale, forceRefresh, checkInternet);
+        response = await networkHelper.getListOfEquipmentBrandRequest(
+     
         );
       } else {
         await getTemporaryDirectory().then((value) async {
           _addDioCacheInterceptor(
             value.path,
-            netwoerkHelper,
+            networkHelper,
             maxStale,
             forceRefresh,
             checkInternet,
           );
         });
-        response = await netwoerkHelper.getListOfEquipmentBrandRequest(
-          queryParameters: {
-            if (whereOrderingAccordingToNameEqualTo != null)
-              "filter[order][name]": whereOrderingAccordingToNameEqualTo,
-            if (whereLimitContentPerPageIsEqualTo != null)
-              "filter[limit]": whereLimitContentPerPageIsEqualTo,
-            if (wherePageNumberIsEqualTo != null)
-              "filter[offset]": wherePageNumberIsEqualTo,
-            if (whereIdIsEqualTo != null)
-              "filter[where][id][eq]": whereIdIsEqualTo,
-            if (whereIdsAre != null) "filter[where][id][in]": whereIdsAre,
-            if (whereNameContains != null)
-              "filter[where][name][contains]": whereNameContains,
-            if (whereSlugNameIsEqualTo != null)
-              "filter[where][slug][eq]": whereSlugNameIsEqualTo,
-          },
+        response = await networkHelper.getListOfEquipmentBrandRequest(
+
         );
       }
 
       if (response.statusCode == 200|| response.statusCode==304) {
-        List<EquipmentModel> data = List.from(
-            response.data['data'].map((e) => EquipmentModel.fromJson(e)));
-        return data;
+      return await compute(ResponseConstants.convertResponseList, response);
+    
       }
     } on DioError catch (e) {
       throw convertDioErrorToRequestException(e);
@@ -223,11 +164,11 @@ class EquipmentRequest {
 
   static void _addDioCacheInterceptor(
       String path,
-      NetwoerkHelper netwoerkHelper,
+      NetworkHelper networkHelper,
       Duration maxStale,
       bool forceRefresh,
       bool? checkInternet) {
-    netwoerkHelper.dio.interceptors.add(DioCacheInterceptor(
+    networkHelper.dio.interceptors.add(DioCacheInterceptor(
         options: CacheOptions(
             store: HiveCacheStore(path),
             allowPostMethod: true,

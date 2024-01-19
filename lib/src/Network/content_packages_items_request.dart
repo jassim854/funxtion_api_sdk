@@ -8,12 +8,12 @@ import 'package:universal_html/html.dart' as html;
 import '../../funxtion_sdk.dart';
 
 class ContentPackageItemRequest {
-  static Future<ContentPackageItemsModel?> listOfContentPackagesItems({
+  static Future<Map<String, dynamic>?> listOfContentPackagesItems({
     required String id,
     bool forceRefresh = true,
     Duration maxStale = const Duration(days: 7),
   }) async {
-    NetwoerkHelper netwoerkHelper = NetwoerkHelper();
+    NetworkHelper networkHelper = NetworkHelper();
     Response<dynamic> response;
     bool? checkInternet;
     await Connectivity().checkConnectivity().then((value) {
@@ -26,38 +26,36 @@ class ContentPackageItemRequest {
     try {
       if (kIsWeb) {
         _addDioCacheInterceptor(html.window.location.pathname ?? "",
-            netwoerkHelper, maxStale, forceRefresh, checkInternet);
-        response = await netwoerkHelper.getListContentPackageItemRequest(
+            networkHelper, maxStale, forceRefresh, checkInternet);
+        response = await networkHelper.getListContentPackageItemRequest(
           id: id,
         );
       } else {
         await getTemporaryDirectory().then((value) async {
-          _addDioCacheInterceptor(value.path, netwoerkHelper, maxStale,
+          _addDioCacheInterceptor(value.path, networkHelper, maxStale,
               forceRefresh, checkInternet);
         });
-        response = await netwoerkHelper.getListContentPackageItemRequest(
+        response = await networkHelper.getListContentPackageItemRequest(
           id: id,
         );
       }
 
       if (response.statusCode == 200 || response.statusCode == 304) {
-        ContentPackageItemsModel data =
-            ContentPackageItemsModel.fromJson(response.data);
-        return data;
+        return await compute(ResponseConstants.convertResponse, response);
       }
-      return null;
     } on DioError catch (e) {
       throw convertDioErrorToRequestException(e);
     }
+    return null;
   }
 
   static void _addDioCacheInterceptor(
       String path,
-      NetwoerkHelper netwoerkHelper,
+      NetworkHelper networkHelper,
       Duration maxStale,
       bool forceRefresh,
       bool? checkInternet) {
-    netwoerkHelper.dio.interceptors.add(DioCacheInterceptor(
+    networkHelper.dio.interceptors.add(DioCacheInterceptor(
         options: CacheOptions(
             store: HiveCacheStore(path),
             maxStale: maxStale,

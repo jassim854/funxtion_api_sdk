@@ -3,11 +3,11 @@ import 'package:dio_cache_interceptor/dio_cache_interceptor.dart';
 
 import 'package:funxtion/funxtion_sdk.dart';
 
-class NetwoerkHelper {
+class NetworkHelper {
   late CacheStore? dioCacheManager;
   late Dio dio;
 
-  NetwoerkHelper() {
+  NetworkHelper() {
     // dioCacheManager = HiveCacheStore('/data/user/0/com.example.example/cache');
     dio = Dio(BaseOptions(
       baseUrl: "https://api-staging.funxtion.com/v3/",
@@ -61,6 +61,10 @@ class NetwoerkHelper {
     );
   }
 
+  Future<Response> getWorkoutFilterRequest() async {
+    return await dio.get(ConstantApis.getWorkoutFilterApi);
+  }
+
   Future<Response> getListOfTrainingPlanRequest({
     Map<String, dynamic>? queryParameters,
   }) async {
@@ -70,56 +74,53 @@ class NetwoerkHelper {
     );
   }
 
+  Future<Response> getTrainingPlanFilterRequest() async {
+    return await dio.get(
+      ConstantApis.getTrainingPlanFilterApi,
+    );
+  }
+
   Future<Response> getTrainingPlanByIdRequest({required String id}) async {
     return await dio.get(
       ConstantApis.getTrainingPlanApi + id,
     );
   }
 
-  Future<Response> getListOfEquipmentRequest(
-      {Map<String, dynamic>? queryParameters}) async {
+  Future<Response> getListOfEquipmentRequest() async {
     return await dio.get(
       ConstantApis.listEquipmentApi,
-      queryParameters: queryParameters,
     );
   }
 
-  Future<Response> getListOfEquipmentBrandRequest(
-      {
-      Map<String, dynamic>? queryParameters}) async {
+  Future<Response> getListOfEquipmentBrandRequest() async {
     return await dio.get(
       ConstantApis.listEquipmentBrandApi,
-      queryParameters: queryParameters,
     );
   }
 
-  Future<Response> getEquipmentByIdReques(
-      {required String id,
-}) async {
+  Future<Response> getEquipmentByIdReques({
+    required String id,
+  }) async {
     return await dio.get(
       ConstantApis.getEquipmentApi + id,
     );
   }
 
-  Future<Response> getListOfFitnessGoalRequest(
-      {
-      Map<String, dynamic>? queryParameters}) async {
+  Future<Response> getListOfFitnessGoalRequest() async {
     return await dio.get(
       ConstantApis.listFitnessGoalApi,
-      queryParameters: queryParameters,
     );
   }
 
-  Future<Response> getFitnessGoalByIdRequest(
-      {required String id,
-     }) async {
+  Future<Response> getFitnessGoalByIdRequest({
+    required String id,
+  }) async {
     return await dio.get(
       ConstantApis.getFitnessGoalApi + id,
     );
   }
 
-  Future<Response> getListOfInstructorsRequest(
-      ) async {
+  Future<Response> getListOfInstructorsRequest() async {
     return await dio.get(
       ConstantApis.listInstructorApi,
     );
@@ -138,6 +139,12 @@ class NetwoerkHelper {
     return await dio.get(
       ConstantApis.listOnDemandApi,
       queryParameters: queryParameters,
+    );
+  }
+
+  Future<Response> getOnDemandFilterRequest() async {
+    return await dio.get(
+      ConstantApis.getOnDemandFilterApi,
     );
   }
 
@@ -161,19 +168,15 @@ class NetwoerkHelper {
     );
   }
 
-  Future<Response> getListOnDemandCategoriesRequest(
-      {Map<String, dynamic>? queryParameters}) async {
+  Future<Response> getListOnDemandCategoriesRequest() async {
     return await dio.get(
       ConstantApis.listOnDemandCategoryApi,
-      queryParameters: queryParameters,
     );
   }
 
-  Future<Response> getListOfMuscleGroupRequest(
-      {Map<String, dynamic>? queryParameters}) async {
+  Future<Response> getListOfMuscleGroupRequest() async {
     return await dio.get(
       ConstantApis.listMuscleGroupApi,
-      queryParameters: queryParameters,
     );
   }
 
@@ -191,11 +194,9 @@ class NetwoerkHelper {
     );
   }
 
-  Future<Response> getBodyPartsRequest(
-      {Map<String, dynamic>? queryParameters}) async {
+  Future<Response> getBodyPartsRequest() async {
     return await dio.get(
       ConstantApis.getBodyPartsApi,
-      queryParameters: queryParameters,
     );
   }
 

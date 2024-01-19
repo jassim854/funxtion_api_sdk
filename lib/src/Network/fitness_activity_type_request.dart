@@ -8,11 +8,10 @@ import 'package:universal_html/html.dart' as html;
 import '../../funxtion_sdk.dart';
 
 class FitnessActivityTypeRequest {
-  static Future<List<FitnessActivityTypeModel>?> listOfFtinessActivitiesType(
-      {Duration? maxAge,
-      bool forceRefresh = true,
+  static Future<List<Map<String, dynamic>>?> listOfFtinessActivitiesType(
+      {bool forceRefresh = true,
       Duration maxStale = const Duration(days: 7)}) async {
-    NetwoerkHelper netwoerkHelper = NetwoerkHelper();
+    NetworkHelper networkHelper = NetworkHelper();
     Response<dynamic> response;
     bool? checkInternet;
     await Connectivity().checkConnectivity().then((value) {
@@ -25,26 +24,23 @@ class FitnessActivityTypeRequest {
     try {
       if (kIsWeb) {
         _addDioCacheInterceptor(html.window.location.pathname ?? "",
-            netwoerkHelper, maxStale, forceRefresh, checkInternet);
-        response = await netwoerkHelper.getFitnessActivitiesTypeRequest();
+            networkHelper, maxStale, forceRefresh, checkInternet);
+        response = await networkHelper.getFitnessActivitiesTypeRequest();
       } else {
         await getTemporaryDirectory().then((value) async {
           _addDioCacheInterceptor(
             value.path,
-            netwoerkHelper,
+            networkHelper,
             maxStale,
             forceRefresh,
             checkInternet,
           );
         });
-        response = await netwoerkHelper.getFitnessActivitiesTypeRequest();
+        response = await networkHelper.getFitnessActivitiesTypeRequest();
       }
 
       if (response.statusCode == 200 || response.statusCode == 304) {
-        List<FitnessActivityTypeModel> data = List.from(response.data['data']
-            .map((e) => FitnessActivityTypeModel.fromJson(e)));
-
-        return data;
+        return await compute(ResponseConstants.convertResponseList, response);
       }
       return null;
     } on DioError catch (e) {
@@ -52,12 +48,12 @@ class FitnessActivityTypeRequest {
     }
   }
 
-  static Future<FitnessActivityTypeModel?> ftinessActivityTypeById(
+  static Future<Map<String, dynamic>?> ftinessActivityTypeById(
       {required String id,
       Duration? maxAge,
       bool forceRefresh = true,
       Duration maxStale = const Duration(days: 7)}) async {
-    NetwoerkHelper netwoerkHelper = NetwoerkHelper();
+    NetworkHelper networkHelper = NetworkHelper();
     Response<dynamic> response;
     bool? checkInternet;
     await Connectivity().checkConnectivity().then((value) {
@@ -70,30 +66,27 @@ class FitnessActivityTypeRequest {
     try {
       if (kIsWeb) {
         _addDioCacheInterceptor(html.window.location.pathname ?? "",
-            netwoerkHelper, maxStale, forceRefresh, checkInternet);
-        response = await netwoerkHelper.getFitnessActivityTypeByIdrequest(
+            networkHelper, maxStale, forceRefresh, checkInternet);
+        response = await networkHelper.getFitnessActivityTypeByIdrequest(
           id: id,
         );
       } else {
         await getTemporaryDirectory().then((value) async {
           _addDioCacheInterceptor(
             value.path,
-            netwoerkHelper,
+            networkHelper,
             maxStale,
             forceRefresh,
             checkInternet,
           );
         });
-        response = await netwoerkHelper.getFitnessActivityTypeByIdrequest(
+        response = await networkHelper.getFitnessActivityTypeByIdrequest(
           id: id,
         );
       }
 
       if (response.statusCode == 200 || response.statusCode == 304) {
-        FitnessActivityTypeModel data =
-            FitnessActivityTypeModel.fromJson(response.data);
-
-        return data;
+        return await compute(ResponseConstants.convertResponse, response);
       }
       return null;
     } on DioError catch (e) {
@@ -103,11 +96,11 @@ class FitnessActivityTypeRequest {
 
   static void _addDioCacheInterceptor(
       String path,
-      NetwoerkHelper netwoerkHelper,
+      NetworkHelper networkHelper,
       Duration maxStale,
       bool forceRefresh,
       bool? checkInternet) {
-    netwoerkHelper.dio.interceptors.add(DioCacheInterceptor(
+    networkHelper.dio.interceptors.add(DioCacheInterceptor(
         options: CacheOptions(
             store: HiveCacheStore(path),
             allowPostMethod: true,
