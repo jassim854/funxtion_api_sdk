@@ -12,7 +12,7 @@ class ContentProviderCategoryOnDemandRequest {
     bool forceRefresh = true,
     Duration maxStale = const Duration(days: 7),
   }) async {
-    NetwoerkHelper netwoerkHelper = NetwoerkHelper();
+    NetworkHelper networkHelper = NetworkHelper();
     Response<dynamic> response;
     bool? checkInternet;
     await Connectivity().checkConnectivity().then((value) {
@@ -25,14 +25,14 @@ class ContentProviderCategoryOnDemandRequest {
     try {
       if (kIsWeb) {
         _addDioCacheInterceptor(html.window.location.pathname ?? "",
-            netwoerkHelper, maxStale, forceRefresh, checkInternet);
-        response = await netwoerkHelper.getListOfContentProviderRequest();
+            networkHelper, maxStale, forceRefresh, checkInternet);
+        response = await networkHelper.getListOfContentProviderRequest();
       } else {
         await getTemporaryDirectory().then((value) async {
-          _addDioCacheInterceptor(value.path, netwoerkHelper, maxStale,
+          _addDioCacheInterceptor(value.path, networkHelper, maxStale,
               forceRefresh, checkInternet);
         });
-        response = await netwoerkHelper.getListOfContentProviderRequest();
+        response = await networkHelper.getListOfContentProviderRequest();
       }
 
       if (response.statusCode == 200 || response.statusCode == 304) {
@@ -47,7 +47,7 @@ class ContentProviderCategoryOnDemandRequest {
   static Future<List<Map<String, dynamic>>?> contentCategory(
       {bool forceRefresh = true,
       Duration maxStale = const Duration(days: 7)}) async {
-    NetwoerkHelper netwoerkHelper = NetwoerkHelper();
+    NetworkHelper networkHelper = NetworkHelper();
     Response<dynamic> response;
     bool? checkInternet;
     await Connectivity().checkConnectivity().then((value) {
@@ -60,14 +60,14 @@ class ContentProviderCategoryOnDemandRequest {
     try {
       if (kIsWeb) {
         _addDioCacheInterceptor(html.window.location.pathname ?? "",
-            netwoerkHelper, maxStale, forceRefresh, checkInternet);
-        response = await netwoerkHelper.getListOfContentCategoryRequest();
+            networkHelper, maxStale, forceRefresh, checkInternet);
+        response = await networkHelper.getListOfContentCategoryRequest();
       } else {
         await getTemporaryDirectory().then((value) async {
-          _addDioCacheInterceptor(value.path, netwoerkHelper, maxStale,
+          _addDioCacheInterceptor(value.path, networkHelper, maxStale,
               forceRefresh, checkInternet);
         });
-        response = await netwoerkHelper.getListOfContentCategoryRequest();
+        response = await networkHelper.getListOfContentCategoryRequest();
       }
 
       if (response.statusCode == 200 || response.statusCode == 304) {
@@ -90,7 +90,7 @@ class ContentProviderCategoryOnDemandRequest {
     String? wherePageNumberIsEqualTo,
     String? whereSlugNameIsEqualTo,
   }) async {
-    NetwoerkHelper netwoerkHelper = NetwoerkHelper();
+    NetworkHelper networkHelper = NetworkHelper();
     Response<dynamic> response;
     bool? checkInternet;
     await Connectivity().checkConnectivity().then((value) {
@@ -103,16 +103,16 @@ class ContentProviderCategoryOnDemandRequest {
     try {
       if (kIsWeb) {
         _addDioCacheInterceptor(html.window.location.pathname ?? "",
-            netwoerkHelper, maxStale, forceRefresh, checkInternet);
-        response = await netwoerkHelper.getListOnDemandCategoriesRequest(
+            networkHelper, maxStale, forceRefresh, checkInternet);
+        response = await networkHelper.getListOnDemandCategoriesRequest(
       
         );
       } else {
         await getTemporaryDirectory().then((value) async {
-          _addDioCacheInterceptor(value.path, netwoerkHelper, maxStale,
+          _addDioCacheInterceptor(value.path, networkHelper, maxStale,
               forceRefresh, checkInternet);
         });
-        response = await netwoerkHelper.getListOnDemandCategoriesRequest(
+        response = await networkHelper.getListOnDemandCategoriesRequest(
     
         );
       }
@@ -128,11 +128,11 @@ class ContentProviderCategoryOnDemandRequest {
 
   static void _addDioCacheInterceptor(
       String path,
-      NetwoerkHelper netwoerkHelper,
+      NetworkHelper networkHelper,
       Duration maxStale,
       bool forceRefresh,
       bool? checkInternet) {
-    netwoerkHelper.dio.interceptors.add(DioCacheInterceptor(
+    networkHelper.dio.interceptors.add(DioCacheInterceptor(
         options: CacheOptions(
             store: HiveCacheStore(path),
             maxStale: maxStale,

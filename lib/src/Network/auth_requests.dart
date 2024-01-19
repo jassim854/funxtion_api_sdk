@@ -19,7 +19,7 @@ class AuthRequest {
       required String password,
       bool forceRefresh = true,
       Duration maxStale = const Duration(hours: 4)}) async {
-    NetwoerkHelper netwoerkHelper = NetwoerkHelper();
+    NetworkHelper networkHelper = NetworkHelper();
     Response<dynamic> response;
     bool? checkInternet;
     await Connectivity().checkConnectivity().then((value) {
@@ -33,17 +33,17 @@ class AuthRequest {
     try {
       if (kIsWeb) {
         _addDioCacheInterceptor(html.window.location.pathname ?? "",
-            netwoerkHelper, maxStale, forceRefresh, checkInternet);
-        response = await netwoerkHelper.postAuthRequest(
+            networkHelper, maxStale, forceRefresh, checkInternet);
+        response = await networkHelper.postAuthRequest(
           username: username,
           password: password,
         );
       } else {
         await getTemporaryDirectory().then((value) async {
-          _addDioCacheInterceptor(value.path, netwoerkHelper, maxStale,
+          _addDioCacheInterceptor(value.path, networkHelper, maxStale,
               forceRefresh, checkInternet);
         });
-        response = await netwoerkHelper.postAuthRequest(
+        response = await networkHelper.postAuthRequest(
           username: username,
           password: password,
         );
@@ -53,7 +53,7 @@ class AuthRequest {
         setToken = response.data['token'].toString();
 
         print(getToken);
-        // print(NetwoerkHelper.getToken);
+        // print(NetworkHelper.getToken);
         return true;
       }
     } on DioError catch (e) {
@@ -67,12 +67,12 @@ class AuthRequest {
 
   static void _addDioCacheInterceptor(
     String path,
-    NetwoerkHelper netwoerkHelper,
+    NetworkHelper networkHelper,
     Duration maxStale,
     bool forceRefresh,
     bool? checkInternet,
   ) {
-    netwoerkHelper.dio.interceptors.add(DioCacheInterceptor(
+    networkHelper.dio.interceptors.add(DioCacheInterceptor(
         options: CacheOptions(
             store: HiveCacheStore(path),
             allowPostMethod: true,

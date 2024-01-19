@@ -20,7 +20,7 @@ class MuscleGroupRequest {
     String? wherePageNumberIsEqualTo,
     String? whereSlugNameIsEqualTo,
   }) async {
-    NetwoerkHelper netwoerkHelper = NetwoerkHelper();
+    NetworkHelper networkHelper = NetworkHelper();
         Response<dynamic> response;
     bool? checkInternet;
      await Connectivity().checkConnectivity().then((value) {
@@ -33,16 +33,16 @@ class MuscleGroupRequest {
     try {
     if (kIsWeb) {
          _addDioCacheInterceptor(html.window.location.pathname ?? "",
-            netwoerkHelper, maxStale, forceRefresh, checkInternet);
-                 response = await netwoerkHelper.getListOfMuscleGroupRequest(
+            networkHelper, maxStale, forceRefresh, checkInternet);
+                 response = await networkHelper.getListOfMuscleGroupRequest(
  
       );
     } else {
         await getTemporaryDirectory().then((value) async {
-          _addDioCacheInterceptor(value.path, netwoerkHelper, maxStale,
+          _addDioCacheInterceptor(value.path, networkHelper, maxStale,
               forceRefresh, checkInternet);
         });
-           response = await netwoerkHelper.getListOfMuscleGroupRequest(
+           response = await networkHelper.getListOfMuscleGroupRequest(
     );
     }
   
@@ -57,11 +57,11 @@ class MuscleGroupRequest {
   }
     static void _addDioCacheInterceptor(
       String path,
-      NetwoerkHelper netwoerkHelper,
+      NetworkHelper networkHelper,
       Duration maxStale,
       bool forceRefresh,
       bool? checkInternet) {
-    netwoerkHelper.dio.interceptors.add(DioCacheInterceptor(
+    networkHelper.dio.interceptors.add(DioCacheInterceptor(
         options: CacheOptions(
             store: HiveCacheStore(path),
             maxStale: maxStale,

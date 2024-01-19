@@ -11,7 +11,7 @@ class FitnessActivityTypeRequest {
   static Future<List<Map<String, dynamic>>?> listOfFtinessActivitiesType(
       {bool forceRefresh = true,
       Duration maxStale = const Duration(days: 7)}) async {
-    NetwoerkHelper netwoerkHelper = NetwoerkHelper();
+    NetworkHelper networkHelper = NetworkHelper();
     Response<dynamic> response;
     bool? checkInternet;
     await Connectivity().checkConnectivity().then((value) {
@@ -24,19 +24,19 @@ class FitnessActivityTypeRequest {
     try {
       if (kIsWeb) {
         _addDioCacheInterceptor(html.window.location.pathname ?? "",
-            netwoerkHelper, maxStale, forceRefresh, checkInternet);
-        response = await netwoerkHelper.getFitnessActivitiesTypeRequest();
+            networkHelper, maxStale, forceRefresh, checkInternet);
+        response = await networkHelper.getFitnessActivitiesTypeRequest();
       } else {
         await getTemporaryDirectory().then((value) async {
           _addDioCacheInterceptor(
             value.path,
-            netwoerkHelper,
+            networkHelper,
             maxStale,
             forceRefresh,
             checkInternet,
           );
         });
-        response = await netwoerkHelper.getFitnessActivitiesTypeRequest();
+        response = await networkHelper.getFitnessActivitiesTypeRequest();
       }
 
       if (response.statusCode == 200 || response.statusCode == 304) {
@@ -53,7 +53,7 @@ class FitnessActivityTypeRequest {
       Duration? maxAge,
       bool forceRefresh = true,
       Duration maxStale = const Duration(days: 7)}) async {
-    NetwoerkHelper netwoerkHelper = NetwoerkHelper();
+    NetworkHelper networkHelper = NetworkHelper();
     Response<dynamic> response;
     bool? checkInternet;
     await Connectivity().checkConnectivity().then((value) {
@@ -66,21 +66,21 @@ class FitnessActivityTypeRequest {
     try {
       if (kIsWeb) {
         _addDioCacheInterceptor(html.window.location.pathname ?? "",
-            netwoerkHelper, maxStale, forceRefresh, checkInternet);
-        response = await netwoerkHelper.getFitnessActivityTypeByIdrequest(
+            networkHelper, maxStale, forceRefresh, checkInternet);
+        response = await networkHelper.getFitnessActivityTypeByIdrequest(
           id: id,
         );
       } else {
         await getTemporaryDirectory().then((value) async {
           _addDioCacheInterceptor(
             value.path,
-            netwoerkHelper,
+            networkHelper,
             maxStale,
             forceRefresh,
             checkInternet,
           );
         });
-        response = await netwoerkHelper.getFitnessActivityTypeByIdrequest(
+        response = await networkHelper.getFitnessActivityTypeByIdrequest(
           id: id,
         );
       }
@@ -96,11 +96,11 @@ class FitnessActivityTypeRequest {
 
   static void _addDioCacheInterceptor(
       String path,
-      NetwoerkHelper netwoerkHelper,
+      NetworkHelper networkHelper,
       Duration maxStale,
       bool forceRefresh,
       bool? checkInternet) {
-    netwoerkHelper.dio.interceptors.add(DioCacheInterceptor(
+    networkHelper.dio.interceptors.add(DioCacheInterceptor(
         options: CacheOptions(
             store: HiveCacheStore(path),
             allowPostMethod: true,

@@ -13,7 +13,7 @@ class ExerciseRequest {
       Duration maxStale = const Duration(days: 7),
       Map<String, dynamic>? queryParameters
 }) async {
-    NetwoerkHelper netwoerkHelper = NetwoerkHelper();
+    NetworkHelper networkHelper = NetworkHelper();
     Response<dynamic> response;
     bool? checkInternet;
     await Connectivity().checkConnectivity().then((value) {
@@ -26,16 +26,16 @@ class ExerciseRequest {
     try {
       if (kIsWeb) {
         _addDioCacheInterceptor(html.window.location.pathname ?? "",
-            netwoerkHelper, maxStale, forceRefresh, checkInternet);
-        response = await netwoerkHelper.getListOfExerciseRequest(
+            networkHelper, maxStale, forceRefresh, checkInternet);
+        response = await networkHelper.getListOfExerciseRequest(
           queryParameters: queryParameters
         );
       } else {
         await getTemporaryDirectory().then((value) async {
           _addDioCacheInterceptor(html.window.location.pathname ?? "",
-              netwoerkHelper, maxStale, forceRefresh, checkInternet);
+              networkHelper, maxStale, forceRefresh, checkInternet);
         });
-        response = await netwoerkHelper.getListOfExerciseRequest(
+        response = await networkHelper.getListOfExerciseRequest(
           queryParameters: queryParameters
         );
       }
@@ -55,7 +55,7 @@ class ExerciseRequest {
       {required String id,
       bool forceRefresh = true,
       Duration maxStale = const Duration(days: 7)}) async {
-    NetwoerkHelper netwoerkHelper = NetwoerkHelper();
+    NetworkHelper networkHelper = NetworkHelper();
     Response<dynamic> response;
     bool? checkInternet;
     await Connectivity().checkConnectivity().then((value) {
@@ -68,16 +68,16 @@ class ExerciseRequest {
     try {
       if (kIsWeb) {
         _addDioCacheInterceptor(html.window.location.pathname ?? "",
-            netwoerkHelper, maxStale, forceRefresh, checkInternet);
-        response = await netwoerkHelper.getExerciseByIdRequest(
+            networkHelper, maxStale, forceRefresh, checkInternet);
+        response = await networkHelper.getExerciseByIdRequest(
           id: id,
         );
       } else {
         await getTemporaryDirectory().then((value) async {
           _addDioCacheInterceptor(html.window.location.pathname ?? "",
-              netwoerkHelper, maxStale, forceRefresh, checkInternet);
+              networkHelper, maxStale, forceRefresh, checkInternet);
         });
-        response = await netwoerkHelper.getExerciseByIdRequest(
+        response = await networkHelper.getExerciseByIdRequest(
           id: id,
         );
       }
@@ -93,12 +93,12 @@ class ExerciseRequest {
 
   static void _addDioCacheInterceptor(
     String path,
-    NetwoerkHelper netwoerkHelper,
+    NetworkHelper networkHelper,
     Duration maxStale,
     bool forceRefresh,
     bool? checkInternet,
   ) {
-    netwoerkHelper.dio.interceptors.add(DioCacheInterceptor(
+    networkHelper.dio.interceptors.add(DioCacheInterceptor(
         options: CacheOptions(
             store: HiveCacheStore(path),
             allowPostMethod: true,

@@ -19,7 +19,7 @@ class EquipmentRequest {
     String? wherePageNumberIsEqualTo,
     String? whereSlugNameIsEqualTo,
   }) async {
-    NetwoerkHelper netwoerkHelper = NetwoerkHelper();
+    NetworkHelper networkHelper = NetworkHelper();
     Response<dynamic> response;
     bool? checkInternet;
     await Connectivity().checkConnectivity().then((value) {
@@ -32,21 +32,21 @@ class EquipmentRequest {
     try {
       if (kIsWeb) {
         _addDioCacheInterceptor(html.window.location.pathname ?? "",
-            netwoerkHelper, maxStale, forceRefresh, checkInternet);
-        response = await netwoerkHelper.getListOfEquipmentRequest(
+            networkHelper, maxStale, forceRefresh, checkInternet);
+        response = await networkHelper.getListOfEquipmentRequest(
 
         );
       } else {
         await getTemporaryDirectory().then((value) async {
           _addDioCacheInterceptor(
             value.path,
-            netwoerkHelper,
+            networkHelper,
             maxStale,
             forceRefresh,
             checkInternet,
           );
         });
-        response = await netwoerkHelper.getListOfEquipmentRequest(
+        response = await networkHelper.getListOfEquipmentRequest(
  
         );
       }
@@ -65,7 +65,7 @@ class EquipmentRequest {
       {required String id,
       bool forceRefresh = true,
       Duration maxStale = const Duration(days: 7)}) async {
-    NetwoerkHelper netwoerkHelper = NetwoerkHelper();
+    NetworkHelper networkHelper = NetworkHelper();
     Response<dynamic> response;
     bool? checkInternet;
     await Connectivity().checkConnectivity().then((value) {
@@ -78,21 +78,21 @@ class EquipmentRequest {
     try {
       if (kIsWeb) {
         _addDioCacheInterceptor(html.window.location.pathname ?? "",
-            netwoerkHelper, maxStale, forceRefresh, checkInternet);
-        response = await netwoerkHelper.getEquipmentByIdReques(
+            networkHelper, maxStale, forceRefresh, checkInternet);
+        response = await networkHelper.getEquipmentByIdReques(
           id: id,
         );
       } else {
         await getTemporaryDirectory().then((value) async {
           _addDioCacheInterceptor(
             value.path,
-            netwoerkHelper,
+            networkHelper,
             maxStale,
             forceRefresh,
             checkInternet,
           );
         });
-        response = await netwoerkHelper.getEquipmentByIdReques(
+        response = await networkHelper.getEquipmentByIdReques(
           id: id,
         );
       }
@@ -119,7 +119,7 @@ class EquipmentRequest {
     String? wherePageNumberIsEqualTo,
     String? whereSlugNameIsEqualTo,
   }) async {
-    NetwoerkHelper netwoerkHelper = NetwoerkHelper();
+    NetworkHelper networkHelper = NetworkHelper();
     Response<dynamic> response;
     bool? checkInternet;
     await Connectivity().checkConnectivity().then((value) {
@@ -132,21 +132,21 @@ class EquipmentRequest {
     try {
       if (kIsWeb) {
         _addDioCacheInterceptor(html.window.location.pathname ?? "",
-            netwoerkHelper, maxStale, forceRefresh, checkInternet);
-        response = await netwoerkHelper.getListOfEquipmentBrandRequest(
+            networkHelper, maxStale, forceRefresh, checkInternet);
+        response = await networkHelper.getListOfEquipmentBrandRequest(
      
         );
       } else {
         await getTemporaryDirectory().then((value) async {
           _addDioCacheInterceptor(
             value.path,
-            netwoerkHelper,
+            networkHelper,
             maxStale,
             forceRefresh,
             checkInternet,
           );
         });
-        response = await netwoerkHelper.getListOfEquipmentBrandRequest(
+        response = await networkHelper.getListOfEquipmentBrandRequest(
 
         );
       }
@@ -164,11 +164,11 @@ class EquipmentRequest {
 
   static void _addDioCacheInterceptor(
       String path,
-      NetwoerkHelper netwoerkHelper,
+      NetworkHelper networkHelper,
       Duration maxStale,
       bool forceRefresh,
       bool? checkInternet) {
-    netwoerkHelper.dio.interceptors.add(DioCacheInterceptor(
+    networkHelper.dio.interceptors.add(DioCacheInterceptor(
         options: CacheOptions(
             store: HiveCacheStore(path),
             allowPostMethod: true,
