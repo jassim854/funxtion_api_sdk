@@ -15,7 +15,7 @@ class RequestException {
 RequestException convertDioErrorToRequestException(DioError dioError) {
   return RequestException(
     error: dioError.error,
-    message: dioError.message,
+    message: dioError.message.toString(),
     requestOptions: dioError.requestOptions,
     response: dioError.response,
   );

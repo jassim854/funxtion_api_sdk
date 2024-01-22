@@ -71,7 +71,7 @@ class ContentProviderCategoryOnDemandRequest {
       }
 
       if (response.statusCode == 200 || response.statusCode == 304) {
-           return await compute(ResponseConstants.convertResponseList, response);
+        return await compute(ResponseConstants.convertResponseList, response);
       }
       return null;
     } on DioError catch (e) {
@@ -82,13 +82,6 @@ class ContentProviderCategoryOnDemandRequest {
   static Future<List<Map<String, dynamic>>?> onDemandCategory({
     bool forceRefresh = true,
     Duration maxStale = const Duration(days: 7),
-    String? whereIdIsEqualTo,
-    String? whereIdsAre,
-    String? whereLimitContentPerPageIsEqualTo,
-    String? whereNameIsEqualTo,
-    String? whereOrderingAccordingToNameEqualTo,
-    String? wherePageNumberIsEqualTo,
-    String? whereSlugNameIsEqualTo,
   }) async {
     NetworkHelper networkHelper = NetworkHelper();
     Response<dynamic> response;
@@ -118,7 +111,7 @@ class ContentProviderCategoryOnDemandRequest {
       }
 
       if (response.statusCode == 200 || response.statusCode == 304) {
-          return await compute(ResponseConstants.convertResponseList, response);
+        return await compute(ResponseConstants.convertResponseList, response);
       }
       return null;
     } on DioError catch (e) {
