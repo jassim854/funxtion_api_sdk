@@ -3,11 +3,11 @@ import 'package:dio_cache_interceptor/dio_cache_interceptor.dart';
 
 import 'package:funxtion/funxtion_sdk.dart';
 
-class NetwoerkHelper {
+class NetworkHelper {
   late CacheStore? dioCacheManager;
   late Dio dio;
 
-  NetwoerkHelper() {
+  NetworkHelper() {
     // dioCacheManager = HiveCacheStore('/data/user/0/com.example.example/cache');
     dio = Dio(BaseOptions(
       baseUrl: "https://api-staging.funxtion.com/v3/",

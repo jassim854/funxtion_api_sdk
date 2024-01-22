@@ -12,7 +12,7 @@ class ContentPackageRequest {
     bool forceRefresh = true,
     Duration maxStale = const Duration(days: 7),
   }) async {
-    NetwoerkHelper netwoerkHelper = NetwoerkHelper();
+    NetworkHelper networkHelper = NetworkHelper();
     Response<dynamic> response;
     bool? checkInternet;
     await Connectivity().checkConnectivity().then((value) {
@@ -25,14 +25,14 @@ class ContentPackageRequest {
     try {
       if (kIsWeb) {
         _addDioCacheInterceptor(html.window.location.pathname ?? "",
-            netwoerkHelper, maxStale, forceRefresh, checkInternet);
-        response = await netwoerkHelper.getListOfContentPackageRequest();
+            networkHelper, maxStale, forceRefresh, checkInternet);
+        response = await networkHelper.getListOfContentPackageRequest();
       } else {
         await getTemporaryDirectory().then((value) async {
-          _addDioCacheInterceptor(value.path, netwoerkHelper, maxStale,
+          _addDioCacheInterceptor(value.path, networkHelper, maxStale,
               forceRefresh, checkInternet);
         });
-        response = await netwoerkHelper.getListOfContentPackageRequest();
+        response = await networkHelper.getListOfContentPackageRequest();
       }
 
       if (response.statusCode == 200 || response.statusCode == 304) {
@@ -49,7 +49,7 @@ class ContentPackageRequest {
     bool forceRefresh = true,
     Duration maxStale = const Duration(days: 7),
   }) async {
-    NetwoerkHelper netwoerkHelper = NetwoerkHelper();
+    NetworkHelper networkHelper = NetworkHelper();
     Response<dynamic> response;
     bool? checkInternet;
     await Connectivity().checkConnectivity().then((value) {
@@ -62,14 +62,14 @@ class ContentPackageRequest {
     try {
       if (kIsWeb) {
         _addDioCacheInterceptor(html.window.location.pathname ?? "",
-            netwoerkHelper, maxStale, forceRefresh, checkInternet);
-        response = await netwoerkHelper.getContentPackageById(id: id);
+            networkHelper, maxStale, forceRefresh, checkInternet);
+        response = await networkHelper.getContentPackageById(id: id);
       } else {
         await getTemporaryDirectory().then((value) async {
-          _addDioCacheInterceptor(value.path, netwoerkHelper, maxStale,
+          _addDioCacheInterceptor(value.path, networkHelper, maxStale,
               forceRefresh, checkInternet);
         });
-        response = await netwoerkHelper.getContentPackageById(
+        response = await networkHelper.getContentPackageById(
           id: id,
         );
       }
@@ -85,11 +85,11 @@ class ContentPackageRequest {
 
   static void _addDioCacheInterceptor(
       String path,
-      NetwoerkHelper netwoerkHelper,
+      NetworkHelper networkHelper,
       Duration maxStale,
       bool forceRefresh,
       bool? checkInternet) {
-    netwoerkHelper.dio.interceptors.add(DioCacheInterceptor(
+    networkHelper.dio.interceptors.add(DioCacheInterceptor(
         options: CacheOptions(
             store: HiveCacheStore(path),
             maxStale: maxStale,
