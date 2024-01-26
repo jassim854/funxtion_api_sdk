@@ -77,8 +77,8 @@ class WorkoutRequest {
         );
       } else {
         await getTemporaryDirectory().then((value) async {
-          _addDioCacheInterceptor(value.path, networkHelper, maxStale,
-              forceRefresh, checkInternet);
+          _addDioCacheInterceptor(
+              value.path, networkHelper, maxStale, forceRefresh, checkInternet);
         });
         response = await networkHelper.getWorkoutByIdRequest(
           id: id,
@@ -116,8 +116,8 @@ class WorkoutRequest {
         response = await networkHelper.getWorkoutFilterRequest();
       } else {
         await getTemporaryDirectory().then((value) async {
-          _addDioCacheInterceptor(value.path, networkHelper, maxStale,
-              forceRefresh, checkInternet);
+          _addDioCacheInterceptor(
+              value.path, networkHelper, maxStale, forceRefresh, checkInternet);
         });
         response = await networkHelper.getWorkoutFilterRequest();
       }
@@ -132,12 +132,8 @@ class WorkoutRequest {
     }
   }
 
-  static void _addDioCacheInterceptor(
-      String path,
-      NetworkHelper networkHelper,
-      Duration maxStale,
-      bool forceRefresh,
-      bool? checkInternet) {
+  static void _addDioCacheInterceptor(String path, NetworkHelper networkHelper,
+      Duration maxStale, bool forceRefresh, bool? checkInternet) {
     networkHelper.dio.interceptors.add(DioCacheInterceptor(
         options: CacheOptions(
             store: HiveCacheStore(path),

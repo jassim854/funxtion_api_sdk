@@ -1,4 +1,5 @@
 class ConstantApis {
+  static const String searchContentApi = 'content/search';
   static const String loginApi = "auth/token";
   static const String listExerciseApi = 'content/fitness/exercises';
   static const String getExerciseApi = 'content/fitness/exercises/';

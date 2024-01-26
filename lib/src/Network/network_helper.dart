@@ -12,22 +12,16 @@ class NetworkHelper {
     dio = Dio(BaseOptions(
       baseUrl: "https://api-staging.funxtion.com/v3/",
       headers: {
-        "X-Scope": "platform",
         'Content-Type': 'application/json',
-        "Authorization": AuthRequest.getToken != "null"
-            ? "Bearer ${AuthRequest.getToken}"
-            : ''
+        "Authorization":
+            "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE2OTg5MzAxNjAsImV4cCI6MTczMDQ2NjE2MCwianRpIjoiMDE4YjkwMjAtZjNkMi03MWI3LTlhMTQtMmEwM2I2OTMyYzhjIiwiZW1haWwiOiIwMThiOTAyMC1mM2QyLTcxYjctOWExNC0yYTAzYjY5MzJjOGMuYXBpX2NsaWVudEBmdW54dGlvbi5jb20iLCJzY29wZSI6ImFwaS1jbGllbnQiLCJvcmdJZCI6MTksImNvZGUiOiJldm9sdmVyc3RlY2gifQ.kZZUBTeyT6e1QyACbHFH3UNE23WHpKY7EPhJVLndWaUrIZTpF2CNcnf-VxlvEwWKDe9jvWXPd3mfpeMdqheEFCILAf8SjWwOKied44KKWb6VkjxaSZmtYREU3p_RyBSWFOwdnEHz8oqDw9gfKSvZh773dJUKK8-3q1S5Xe3jkayuJpgBUNumUVvuIbRJLINhwfA5M9yc3c-Zbv3nHTOvQkIJaCdywHXRe30urM-qz7KT3l_iqrw0e7VUZurHQFfEyH2V7pDqqTkoFTG5YlIpbL1TFh1SIH4Yl1ewG1E1LLTSkGfbX8oOmFICzxoQyxC1HeATtYZ3RnF6_j85A_s2_qyBNy5X7XrKaoCzkmO3Zj25nXiV1lNqSTz-X8_sTsFNiCW4CFNYppCrvLaKjwZfBZnbxEp1MKlj54OGy34vxR5_1XSa08Uxei_CwfdX9dto5RoXruDf7VP808pgdAwTdl6GKeiU5tpJ1xfTHmcyzvPgDXNV-t4ZhTE_Uqt84YQEZJOspIFF1mxNONjVJUAfM0axv_9LDXEeKlGx8MIrnlQHGYA19UfG2fzWa26YuFIMSt9NOb-SOpU8jN6V8AxZmpquKWdaDc5FNujQvdF4Jc5tj5KJP2BTkyaosbvmo75b7jOVUAFSK7vpgd9ZWWc99yiT8109kQnTgI7j-Eeuuz8"
       },
     ));
   }
-
-  Future<Response> postAuthRequest({
-    required String username,
-    required String password,
-  }) async {
+  Future<Response> searchContentRequest({required Map data}) async {
     return await dio.post(
-      ConstantApis.loginApi,
-      data: {"username": username, "password": password},
+      ConstantApis.searchContentApi,
+      data: data,
     );
   }
 

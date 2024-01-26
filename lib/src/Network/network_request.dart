@@ -15,3 +15,4 @@ export 'package:funxtion/src/Network/workout_request.dart';
 export 'package:funxtion/src/Network/training_plan_request.dart';
 export 'package:funxtion/src/Network/on_demand_request.dart';
 export 'package:funxtion/src/Network/content_provider_category_ondemand_request.dart';
+export 'package:funxtion/src/Network/search_content_request.dart';
