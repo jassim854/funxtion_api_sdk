@@ -12,7 +12,7 @@ class RequestException {
       required this.response});
 }
 
-RequestException convertDioErrorToRequestException(DioError dioError) {
+RequestException convertDioErrorToRequestException(DioException dioError) {
   return RequestException(
     error: dioError.error,
     message: dioError.message.toString(),

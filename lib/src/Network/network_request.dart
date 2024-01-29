@@ -1,7 +1,7 @@
 library network_request;
 
 export 'package:funxtion/src/Network/network_helper.dart';
-export 'package:funxtion/src/Network/auth_requests.dart';
+export 'package:funxtion/src/Constant/bearer_token.dart';
 export 'package:funxtion/src/Network/body_parts_request.dart';
 export 'package:funxtion/src/Network/content_packages_items_request.dart';
 export 'package:funxtion/src/Network/content_packages_request.dart';
