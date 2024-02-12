@@ -107,8 +107,8 @@ class OnDemandRequest {
         response = await networkHelper.getOnDemandFilterRequest();
       } else {
         await getTemporaryDirectory().then((value) async {
-          _addDioCacheInterceptor(value.path, networkHelper, maxStale,
-              forceRefresh, checkInternet);
+          _addDioCacheInterceptor(
+              value.path, networkHelper, maxStale, forceRefresh, checkInternet);
         });
         response = await networkHelper.getOnDemandFilterRequest();
       }

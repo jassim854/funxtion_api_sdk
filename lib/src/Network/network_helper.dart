@@ -12,23 +12,36 @@ class NetworkHelper {
       baseUrl: "https://api-staging.funxtion.com/v3/",
       headers: {
         'Content-Type': 'application/json',
-         "Authorization": BearerToken.getToken != "null"
+        "Authorization": BearerToken.getToken != "null"
             ? "Bearer ${BearerToken.getToken}"
             : ''
       },
     ));
   }
-  Future<Response> searchContentRequest({required Map data}) async {
+  Future<Response> searchContentRequest(
+      {required Map<String, dynamic> data}) async {
+    Map<String, dynamic> newData = {};
+    newData.addAll(data);
+    if (ContentPackage.getContentPackageId != null) {
+      newData.addAll({"content_package": ContentPackage.getContentPackageId});
+    }
+
     return await dio.post(
       ConstantApis.searchContentApi,
-      data: data,
+      data: newData,
     );
   }
 
   Future<Response> getListOfExerciseRequest(
       {Map<String, dynamic>? queryParameters}) async {
+    Map<String, dynamic>? newParams = {};
+    newParams.addAll(queryParameters ?? {});
+    if (ContentPackage.getContentPackageId != null) {
+      newParams.addAll({"content_package": ContentPackage.getContentPackageId});
+    }
+
     return await dio.get(ConstantApis.listExerciseApi,
-        queryParameters: queryParameters);
+        queryParameters: newParams);
   }
 
   Future<Response> getExerciseByIdRequest({
@@ -41,9 +54,14 @@ class NetworkHelper {
 
   Future<Response> getListOfWorkoutRequest(
       {Map<String, dynamic>? queryParameters}) async {
+    Map<String, dynamic>? newParams = {};
+    newParams.addAll(queryParameters ?? {});
+    if (ContentPackage.getContentPackageId != null) {
+      newParams.addAll({"content_package": ContentPackage.getContentPackageId});
+    }
     return await dio.get(
       ConstantApis.listWorkoutApi,
-      queryParameters: queryParameters,
+      queryParameters: newParams,
     );
   }
 
@@ -56,22 +74,32 @@ class NetworkHelper {
   }
 
   Future<Response> getWorkoutFilterRequest() async {
-    return await dio.get(ConstantApis.getWorkoutFilterApi);
+    return await dio.get(ConstantApis.getWorkoutFilterApi, queryParameters: {
+      if (ContentPackage.getContentPackageId != null)
+        "content_package": ContentPackage.getContentPackageId
+    });
   }
 
   Future<Response> getListOfTrainingPlanRequest({
     Map<String, dynamic>? queryParameters,
   }) async {
+    Map<String, dynamic>? newParams = {};
+    newParams.addAll(queryParameters ?? {});
+    if (ContentPackage.getContentPackageId != null) {
+      newParams.addAll({"content_package": ContentPackage.getContentPackageId});
+    }
     return await dio.get(
       ConstantApis.listTrainingPlanApi,
-      queryParameters: queryParameters,
+      queryParameters: newParams,
     );
   }
 
   Future<Response> getTrainingPlanFilterRequest() async {
-    return await dio.get(
-      ConstantApis.getTrainingPlanFilterApi,
-    );
+    return await dio
+        .get(ConstantApis.getTrainingPlanFilterApi, queryParameters: {
+      if (ContentPackage.getContentPackageId != null)
+        "content_package": ContentPackage.getContentPackageId
+    });
   }
 
   Future<Response> getTrainingPlanByIdRequest({required String id}) async {
@@ -81,15 +109,17 @@ class NetworkHelper {
   }
 
   Future<Response> getListOfEquipmentRequest() async {
-    return await dio.get(
-      ConstantApis.listEquipmentApi,
-    );
+    return await dio.get(ConstantApis.listEquipmentApi, queryParameters: {
+      if (ContentPackage.getContentPackageId != null)
+        "content_package": ContentPackage.getContentPackageId
+    });
   }
 
   Future<Response> getListOfEquipmentBrandRequest() async {
-    return await dio.get(
-      ConstantApis.listEquipmentBrandApi,
-    );
+    return await dio.get(ConstantApis.listEquipmentBrandApi, queryParameters: {
+      if (ContentPackage.getContentPackageId != null)
+        "content_package": ContentPackage.getContentPackageId
+    });
   }
 
   Future<Response> getEquipmentByIdReques({
@@ -101,9 +131,10 @@ class NetworkHelper {
   }
 
   Future<Response> getListOfFitnessGoalRequest() async {
-    return await dio.get(
-      ConstantApis.listFitnessGoalApi,
-    );
+    return await dio.get(ConstantApis.listFitnessGoalApi, queryParameters: {
+      if (ContentPackage.getContentPackageId != null)
+        "content_package": ContentPackage.getContentPackageId
+    });
   }
 
   Future<Response> getFitnessGoalByIdRequest({
@@ -115,9 +146,10 @@ class NetworkHelper {
   }
 
   Future<Response> getListOfInstructorsRequest() async {
-    return await dio.get(
-      ConstantApis.listInstructorApi,
-    );
+    return await dio.get(ConstantApis.listInstructorApi, queryParameters: {
+      if (ContentPackage.getContentPackageId != null)
+        "content_package": ContentPackage.getContentPackageId
+    });
   }
 
   Future<Response> getInstructorByIdRequest({
@@ -130,16 +162,22 @@ class NetworkHelper {
 
   Future<Response> getListOnDemandRequest(
       {Map<String, dynamic>? queryParameters}) async {
+    Map<String, dynamic>? newParams = {};
+    newParams.addAll(queryParameters ?? {});
+    if (ContentPackage.getContentPackageId != null) {
+      newParams.addAll({"content_package": ContentPackage.getContentPackageId});
+    }
     return await dio.get(
       ConstantApis.listOnDemandApi,
-      queryParameters: queryParameters,
+      queryParameters: newParams,
     );
   }
 
   Future<Response> getOnDemandFilterRequest() async {
-    return await dio.get(
-      ConstantApis.getOnDemandFilterApi,
-    );
+    return await dio.get(ConstantApis.getOnDemandFilterApi, queryParameters: {
+      if (ContentPackage.getContentPackageId != null)
+        "content_package": ContentPackage.getContentPackageId
+    });
   }
 
   Future<Response> getOnDemandByIdRequest({
@@ -151,33 +189,45 @@ class NetworkHelper {
   }
 
   Future<Response> getListOfContentProviderRequest() async {
-    return await dio.get(
-      ConstantApis.listContentProvidersApi,
-    );
+    return await dio
+        .get(ConstantApis.listContentProvidersApi, queryParameters: {
+      if (ContentPackage.getContentPackageId != null)
+        "content_package": ContentPackage.getContentPackageId
+    });
   }
 
   Future<Response> getListOfContentCategoryRequest(
       {Map<String, dynamic>? queryParameters}) async {
+    Map<String, dynamic>? newParams = {};
+    newParams.addAll(queryParameters ?? {});
+    if (ContentPackage.getContentPackageId != null) {
+      newParams.addAll({"content_package": ContentPackage.getContentPackageId});
+    }
     return await dio.get(ConstantApis.listContentCategoryApi,
-        queryParameters: queryParameters);
+        queryParameters: newParams);
   }
 
   Future<Response> getListOnDemandCategoriesRequest() async {
-    return await dio.get(
-      ConstantApis.listOnDemandCategoryApi,
-    );
+    return await dio
+        .get(ConstantApis.listOnDemandCategoryApi, queryParameters: {
+      if (ContentPackage.getContentPackageId != null)
+        "content_package": ContentPackage.getContentPackageId
+    });
   }
 
   Future<Response> getListOfMuscleGroupRequest() async {
-    return await dio.get(
-      ConstantApis.listMuscleGroupApi,
-    );
+    return await dio.get(ConstantApis.listMuscleGroupApi, queryParameters: {
+      if (ContentPackage.getContentPackageId != null)
+        "content_package": ContentPackage.getContentPackageId
+    });
   }
 
   Future<Response> getFitnessActivitiesTypeRequest() async {
-    return await dio.get(
-      ConstantApis.getFitnessActivitiesTypeApi,
-    );
+    return await dio
+        .get(ConstantApis.getFitnessActivitiesTypeApi, queryParameters: {
+      if (ContentPackage.getContentPackageId != null)
+        "content_package": ContentPackage.getContentPackageId
+    });
   }
 
   Future<Response> getFitnessActivityTypeByIdrequest({
@@ -189,9 +239,10 @@ class NetworkHelper {
   }
 
   Future<Response> getBodyPartsRequest() async {
-    return await dio.get(
-      ConstantApis.getBodyPartsApi,
-    );
+    return await dio.get(ConstantApis.getBodyPartsApi, queryParameters: {
+      if (ContentPackage.getContentPackageId != null)
+        "content_package": ContentPackage.getContentPackageId
+    });
   }
 
   Future<Response> getABodyPartById({
@@ -203,9 +254,10 @@ class NetworkHelper {
   }
 
   Future<Response> getListOfContentPackageRequest() async {
-    return await dio.get(
-      ConstantApis.listContentPackagesApi,
-    );
+    return await dio.get(ConstantApis.listContentPackagesApi, queryParameters: {
+      if (ContentPackage.getContentPackageId != null)
+        "content_package": ContentPackage.getContentPackageId
+    });
   }
 
   Future<Response> getContentPackageById({

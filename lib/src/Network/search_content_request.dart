@@ -9,7 +9,7 @@ import '../../funxtion_sdk.dart';
 
 class SearchContentRequest {
   static Future<Map<String, dynamic>?> searchContent(
-      {required Map data,
+      {required Map<String,dynamic> data,
       bool forceRefresh = true,
       Duration maxStale = const Duration(hours: 4)}) async {
     NetworkHelper networkHelper = NetworkHelper();
