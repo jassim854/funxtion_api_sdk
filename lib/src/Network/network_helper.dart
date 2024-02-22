@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:dio_cache_interceptor/dio_cache_interceptor.dart';
 
 import 'package:funxtion/funxtion_sdk.dart';
+import 'package:funxtion/src/Constant/app_language.dart';
 
 class NetworkHelper {
   late CacheStore? dioCacheManager;
@@ -12,9 +13,9 @@ class NetworkHelper {
       baseUrl: "https://api-staging.funxtion.com/v3/",
       headers: {
         'Content-Type': 'application/json',
-        "Authorization": BearerToken.getToken != "null"
-            ? "Bearer ${BearerToken.getToken}"
-            : ''
+        "Authorization": "Bearer ${BearerToken.getToken}",
+        if (AppLanguage.getLanguageCode != null)
+          "Accept-Language": AppLanguage.getLanguageCode,
       },
     ));
   }
